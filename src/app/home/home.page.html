@@ -1,12 +1,21 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-tabs>
+  <ion-tab tab="todo">
+    <ion-router-outlet name="todo"></ion-router-outlet>
+  </ion-tab>
+  <ion-tab tab="completed">
+    <ion-router-outlet name="completed"></ion-router-outlet>
+  </ion-tab>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>If you get lost, the <a target="_blank" rel="noopener" href="https://beta.ionicframework.com/docs/">docs</a> will be your guide.</p>
-</ion-content>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="todo" href="/home/(todo:todo)" >
+      <ion-icon name="information-circle"></ion-icon>
+      <ion-label>To Do</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="completed" href="/home/(completed:completed)" >
+      <ion-icon name="calendar" ></ion-icon> 
+      <ion-label >Completed</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+</ion-tabs>

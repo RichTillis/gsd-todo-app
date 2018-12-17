@@ -1,5 +1,7 @@
 {
-  "name": "gsd-todo-app",
-  "integrations": {},
+  "name": "GSD",
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

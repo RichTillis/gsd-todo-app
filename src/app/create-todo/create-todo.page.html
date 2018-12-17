@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title> Create New ToDo </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()"
+        ><ion-icon slot="icon-only" name="close"></ion-icon
+      ></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <ion-item>
+    <ion-label class="underline" position="stacked">Whaddua Got to Get Done</ion-label>
+    <ion-input type="text" [(ngModel)]="todo.title"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label class="underline" position="stacked">Details</ion-label>
+    <ion-textarea
+      type="text"
+      [(ngModel)]="todo.details"
+      rows="5"
+    ></ion-textarea>
+  </ion-item>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="save()" color="tertiary">
+        <ion-icon name="save"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+</ion-content>

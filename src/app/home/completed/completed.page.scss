@@ -1,0 +1,24 @@
+.completed {
+  text-decoration: line-through;
+}
+
+ion-item {
+  --border-radius: 75px;
+  --ion-item-background: var(--ion-color-light);
+  padding-bottom: .5em;
+}
+
+ion-icon {
+  font-size: 32px;
+  margin:0;
+}
+
+ion-label {
+  margin-left: 1em;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.trash{
+  font-size: 32px;
+}

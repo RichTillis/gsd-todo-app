@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Already Done</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list lines="none">
+    <ion-item
+      *ngFor="let todo of (todoService.todos | callback: filterTodo)"
+      class="completed"
+      (click)="editTodo(todo.id)"
+    >
+      <ion-icon
+        slot="start"
+        name="checkmark-circle"
+        (click)="toggleCompleted(todo, $event)"
+        color="tertiary"
+      ></ion-icon>
+      <ion-icon
+        class="trash"
+        slot="end"
+        name="close"
+        (click)="deleteTodo(todo, $event)"
+      ></ion-icon>
+      <ion-label>{{ todo.title }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <!--
+      <ion-fab-button (click)="todoService.createTodo($event)" color="tertiary">
+    -->
+    <ion-fab-button (click)="createTodo()" color="tertiary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

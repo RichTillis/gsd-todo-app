@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ todo.title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-label class="underline" position="stacked">Whaddua Got to Get Done</ion-label>
+    <ion-input type="text" [(ngModel)]="todo.title"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label class="underline" position="stacked">Details</ion-label>
+    <ion-textarea
+      type="text"
+      [(ngModel)]="todo.details"
+      rows="5"
+    ></ion-textarea>
+  </ion-item>
+
+  <ion-item>
+    <ion-label class="underline" *ngIf="!todo.isCompleted">Done Yet??</ion-label>
+    <ion-label class="underline" *ngIf="todo.isCompleted">Done! (Woohoo)</ion-label>
+    <ion-toggle
+      slot="end"
+      [(ngModel)]="todo.isCompleted"
+      color="tertiary"
+    ></ion-toggle>
+  </ion-item>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="saveTodo()" color="tertiary">
+      <ion-icon name="save"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
