@@ -6,26 +6,16 @@
 
 <ion-content padding>
   <ion-list lines="none">
-    <ion-item
-      *ngFor="let todo of (todoService.todos | callback: filterTodo)"
-      (click)="editTodo(todo.id)"
-    >
-      <ion-icon
-        slot="start"
-        name="radio-button-off"
-        (click)="toggleCompleted(todo, $event)"
-      ></ion-icon>
-      <ion-label
-        ><ion-text>{{ todo.title }}</ion-text>
-        <p>{{ todo.details }}</p></ion-label
-      >
+    <ion-item *ngFor="let todo of (todoService.todos | callback: filterTodo)" (click)="editTodo(todo.id)">
+      <ion-icon slot="start" name="radio-button-off" (click)="toggleCompleted(todo, $event)"></ion-icon>
+      <ion-label>
+        <ion-text>{{ todo.title }}</ion-text>
+        <p>{{ todo.details }}</p>
+      </ion-label>
     </ion-item>
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <!--
-      <ion-fab-button (click)="todoService.createTodo($event)" color="tertiary">
-    -->
     <ion-fab-button (click)="createTodo()" color="tertiary">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
