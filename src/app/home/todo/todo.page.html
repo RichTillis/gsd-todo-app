@@ -6,7 +6,7 @@
 
 <ion-content padding>
   <ion-list lines="none">
-    <ion-item *ngFor="let todo of (todoService.todos | callback: filterTodo)" (click)="editTodo(todo.id)">
+    <ion-item *ngFor="let todo of (todoService.todos | callback: filterTodo)" routerLink="/edit/{{todo.id}}">
       <ion-icon slot="start" name="radio-button-off" (click)="toggleCompleted(todo, $event)"></ion-icon>
       <ion-label>
         <ion-text>{{ todo.title }}</ion-text>

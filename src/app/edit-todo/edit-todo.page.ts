@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { NavController, ToastController } from "@ionic/angular";
-import { ActivatedRoute } from "@angular/router";
+import { ToastController } from "@ionic/angular";
+import { ActivatedRoute, Router } from "@angular/router";
 
 import { Todo } from "../interfaces/todo.interface";
-
 import { TodoService } from "../services/todo.service";
 
 @Component({
@@ -13,11 +12,10 @@ import { TodoService } from "../services/todo.service";
 })
 export class EditTodoPage implements OnInit {
   public todo: Todo;
-  private id: string;
 
   constructor(
     private route: ActivatedRoute,
-    private navCtrl: NavController,
+    private router: Router,
     private toastController: ToastController,
     private todoService: TodoService
   ) {
@@ -42,9 +40,11 @@ export class EditTodoPage implements OnInit {
   }
 
   saveTodo() {
+    //this should be a promise
     this.todoService.updateTodo(this.todo);
+    //then the successful toast and redirect
     this.saveSuccessfulToast();
-    this.navCtrl.navigateBack("home");
+    this.router.navigateByUrl('/home');
   }
 
   async saveSuccessfulToast() {

@@ -1,13 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { NavController, AlertController, ModalController } from "@ionic/angular";
-
-import { Observable } from "rxjs";
+import { AlertController, ModalController } from "@ionic/angular";
 
 import { Todo } from "../../interfaces/todo.interface";
-import { TodoId } from "../../interfaces/todo-id.interface";
-
 import { CreateTodoPage } from "../../create-todo/create-todo.page";
-
 import { TodoService } from "../../services/todo.service";
 
 @Component({
@@ -19,17 +14,16 @@ export class CompletedPage implements OnInit {
   public todos: Todo[];
 
   constructor(
-    public navCtrl: NavController,
     public alertController: AlertController,
     public todoService: TodoService,
     private modalCtrl: ModalController
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.todoService.getTodos();
-    console.log(this.todoService.todos);
+    // console.log(this.todoService.todos);
   }
-  
+
   filterTodo(todo: Todo) {
     return todo.isCompleted;
   }
@@ -40,11 +34,7 @@ export class CompletedPage implements OnInit {
     this.todoService.updateTodo(todo);
   }
 
-  editTodo(id: string) {
-    this.navCtrl.navigateForward("edit/" + id);
-  }
-
-  deleteTodo(todo: Todo, ev) {
+  deleteTodo(todo: Todo, ev: any) {
     ev.stopPropagation();
     this.presentDeleteConfirm(todo);
   }
@@ -84,6 +74,4 @@ export class CompletedPage implements OnInit {
         modal.present();
       });
   }
-
-  
 }
