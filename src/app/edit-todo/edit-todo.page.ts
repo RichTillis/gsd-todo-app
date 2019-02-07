@@ -47,10 +47,6 @@ export class EditTodoPage implements OnInit {
     this.navCtrl.navigateBack("home");
   }
 
-  toggleCompleted(event) {
-    console.log(event);
-  }
-
   async saveSuccessfulToast() {
     const toast = await this.toastController.create({
       message: "Changes saved.",
