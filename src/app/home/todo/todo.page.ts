@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { ModalController } from "@ionic/angular";
+import { ModalController, AlertController } from "@ionic/angular";
+
+import { CreateTodoPage } from "../../create-todo/create-todo.page";
 
 import { TodoService } from "../../services/todo.service";
-import { CreateTodoPage } from "../../create-todo/create-todo.page";
 import { Todo } from "../../interfaces/todo.interface";
 
 @Component({
@@ -13,7 +14,8 @@ import { Todo } from "../../interfaces/todo.interface";
 export class TodoPage implements OnInit {
   constructor(
     public todoService: TodoService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    public alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -40,5 +42,42 @@ export class TodoPage implements OnInit {
         // modal.onDidDismiss().then(() => {});
         modal.present();
       });
+  }
+
+
+  async presentAlertPrompt() {
+    const alert = await this.alertController.create({
+      header: 'New Todo',
+      inputs: [
+        {
+          name: 'title',
+          type: 'text',
+          placeholder: 'Whaddua gotta get done?'
+        },
+        {
+          name: 'group',
+          type: 'text',
+          placeholder: 'group'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (data) => {
+            console.log(data)
+            console.log('Confirm Ok');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

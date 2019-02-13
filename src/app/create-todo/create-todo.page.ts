@@ -15,7 +15,7 @@ export class CreateTodoPage implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private todoService: TodoService
-  ) {}
+  ) { }
 
   ngOnInit() {
     let newDate = new Date().toUTCString();

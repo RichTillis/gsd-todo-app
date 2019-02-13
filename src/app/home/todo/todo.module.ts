@@ -7,7 +7,6 @@ import { IonicModule } from "@ionic/angular";
 
 import { TodoPage } from "./todo.page";
 import { AppPipesModule } from "../../pipes/pipes.module";
-import { CreateTodoPage } from "../../create-todo/create-todo.page";
 
 const routes: Routes = [
   {
@@ -25,6 +24,6 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [TodoPage],
-  entryComponents: [CreateTodoPage]
+  entryComponents: []
 })
 export class TodoPageModule {}

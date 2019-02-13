@@ -5,11 +5,22 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
+import { CreateTodoPage } from './create-todo.page';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: CreateTodoPage
+  }
+];
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    RouterModule.forChild(routes)
   ],
+  declarations: [CreateTodoPage]
 })
 export class CreateTodoPageModule {}

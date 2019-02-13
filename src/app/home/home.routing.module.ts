@@ -2,8 +2,6 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
 import { HomePage } from "./home.page";
-import { TodoPage } from "./todo/todo.page";
-import { CompletedPage } from "./completed/completed.page";
 
 const routes: Routes = [
   {
@@ -11,25 +9,28 @@ const routes: Routes = [
     component: HomePage,
     children: [
       {
-        path: "",
-        redirectTo: "/home/(todo:todo)",
-        pathMatch: "full"
-      },
-      {
         path: "todo",
-        outlet: "todo",
-        component: TodoPage
+        children: [
+          {
+            path: "",
+            loadChildren: "./todo/todo.module#TodoPageModule"
+          }
+        ]
       },
       {
         path: "completed",
-        outlet: "completed",
-        component: CompletedPage
+        children: [
+          {
+            path: "",
+            loadChildren: "./completed/completed.module#CompletedPageModule"
+          }
+        ]
       }
     ]
   },
   {
     path: "",
-    redirectTo: "/home/(todo:todo)",
+    redirectTo: "/home/todo",
     pathMatch: "full"
   }
 ];
@@ -38,4 +39,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class HomePageRoutingModule {}
+export class HomePageRoutingModule { }

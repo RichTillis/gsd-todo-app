@@ -4,7 +4,6 @@ import { IonicModule } from "@ionic/angular";
 import { FormsModule } from "@angular/forms";
 
 import { HomePage } from "./home.page";
-import { CreateTodoPage } from "../create-todo/create-todo.page";
 
 import { HomePageRoutingModule } from "./home.routing.module";
 import { TodoPageModule } from "./todo/todo.module";
@@ -20,6 +19,6 @@ import { CompletedPageModule } from "./completed/completed.module";
     TodoPageModule,
     CompletedPageModule
   ],
-  declarations: [HomePage, CreateTodoPage]
+  declarations: [HomePage]
 })
 export class HomePageModule {}

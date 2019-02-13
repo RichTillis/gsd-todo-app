@@ -28,7 +28,7 @@ export class CompletedPage implements OnInit {
     return todo.isCompleted;
   }
 
-  toggleCompleted(todo: Todo, ev) {
+  toggleCompleted(todo: Todo, ev: any) {
     ev.stopPropagation();
     todo.isCompleted = !todo.isCompleted;
     this.todoService.updateTodo(todo);
