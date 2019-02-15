@@ -11,6 +11,8 @@ import { TodoService } from "../../services/todo.service";
   styleUrls: ["./completed.page.scss"]
 })
 export class CompletedPage implements OnInit {
+  private todo: Todo;
+
   public todos: Todo[];
 
   constructor(
@@ -73,5 +75,55 @@ export class CompletedPage implements OnInit {
         // modal.onDidDismiss().then(() => {});
         modal.present();
       });
+  }
+
+  async presentCreateTodoPrompt() {
+    const alert = await this.alertController.create({
+      header: 'New Todo',
+      inputs: [
+        {
+          name: 'title',
+          type: 'text',
+          placeholder: 'Whaddua gotta get done?'
+        },
+        {
+          name: 'group',
+          type: 'text',
+          placeholder: 'group'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (data) => {
+            console.log(data);
+            // let newDate = new Date().toUTCString();
+            let newDate = Date.now().toString();
+            // console.log(newNewDate);
+
+            this.todo = {
+              id: newDate,
+              title: data.title,
+              group: data.group,
+              details: "",
+              isCompleted: false,
+              createdAt: newDate,
+              completedAt: ""
+            };
+            this.todoService.createTodo(this.todo);
+            console.log('Confirm Ok');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

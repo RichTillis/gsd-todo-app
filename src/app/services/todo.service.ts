@@ -82,6 +82,7 @@ export class TodoService {
     return {
       id: newDate,
       title: title,
+      group: "",
       details: "",
       isCompleted: false,
       createdAt: newDate,

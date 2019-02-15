@@ -12,6 +12,8 @@ import { Todo } from "../../interfaces/todo.interface";
   styleUrls: ["./todo.page.scss"]
 })
 export class TodoPage implements OnInit {
+  private todo: Todo;
+
   constructor(
     public todoService: TodoService,
     private modalCtrl: ModalController,
@@ -45,7 +47,7 @@ export class TodoPage implements OnInit {
   }
 
 
-  async presentAlertPrompt() {
+  async presentCreateTodoPrompt() {
     const alert = await this.alertController.create({
       header: 'New Todo',
       inputs: [
@@ -71,7 +73,19 @@ export class TodoPage implements OnInit {
         }, {
           text: 'Ok',
           handler: (data) => {
-            console.log(data)
+            console.log(data);
+            let newDate = new Date().toUTCString();
+
+            this.todo = {
+              id: newDate,
+              title: data.title,
+              group: data.group,
+              details: "",
+              isCompleted: false,
+              createdAt: newDate,
+              completedAt: ""
+            };
+            this.todoService.createTodo(this.todo);
             console.log('Confirm Ok');
           }
         }

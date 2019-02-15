@@ -23,6 +23,7 @@ export class EditTodoPage implements OnInit {
     this.todo = {
       id: newDate,
       title: "",
+      group: "",
       details: "",
       isCompleted: false,
       createdAt: newDate,
