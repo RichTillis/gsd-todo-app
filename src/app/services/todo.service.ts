@@ -3,6 +3,10 @@ import { Injectable } from "@angular/core";
 import { Todo } from "../interfaces/todo.interface";
 import { AlertController } from "@ionic/angular";
 
+// import { groupBy } from 'lodash';
+
+import * as _ from 'lodash';
+
 import { StorageService } from "../services/storage.service";
 
 @Injectable({
@@ -10,11 +14,12 @@ import { StorageService } from "../services/storage.service";
 })
 export class TodoService {
   public todos: Todo[];
+  public groupedTodos: any;
 
   constructor(
     private storageService: StorageService,
     public alertController: AlertController
-  ) {}
+  ) { }
 
   getTodo(id: string): Promise<any> {
     return this.storageService.getTodo(id);
@@ -27,15 +32,28 @@ export class TodoService {
     });
   }
 
+  getGroupedTodos() {
+    this.storageService.getTodos().then(todos => {
+      this.groupedTodos = _.chain(todos)
+        .filter(['isCompleted', false])
+        .groupBy(x => x.group)
+        .map((value, key) => ({ group: key, todos: value }))
+        .value();
+      console.log(this.groupedTodos);
+    });
+  }
+
   updateTodo(todo: Todo) {
     this.storageService.updateTodo(todo).then(() => {
       this.getTodos();
+      this.getGroupedTodos();
     });
   }
 
   deleteTodo(id: string) {
     this.storageService.deleteTodo(id).then(() => {
       this.getTodos();
+      this.getGroupedTodos();
     });
   }
 
@@ -45,6 +63,7 @@ export class TodoService {
     // });
     this.storageService.createTodo(newTodo).then(() => {
       this.getTodos();
+      this.getGroupedTodos();
     });
   }
 
@@ -74,6 +93,7 @@ export class TodoService {
     });
     await alert.present().then(() => {
       this.getTodos();
+      this.getGroupedTodos();
     });
   }
 

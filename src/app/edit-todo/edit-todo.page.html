@@ -15,8 +15,13 @@
   </ion-item>
 
   <ion-item>
+      <ion-label class="underline" position="stacked">Category</ion-label>
+      <ion-input type="text" [(ngModel)]="todo.group"></ion-input>
+    </ion-item>
+
+  <ion-item>
     <ion-label class="underline" position="stacked">Details</ion-label>
-    <ion-textarea type="text" [(ngModel)]="todo.details" rows="18"></ion-textarea>
+    <ion-textarea type="text" [(ngModel)]="todo.details" rows="12"></ion-textarea>
   </ion-item>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">

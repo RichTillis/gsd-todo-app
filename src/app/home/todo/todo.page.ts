@@ -14,6 +14,7 @@ import { Todo } from "../../interfaces/todo.interface";
 })
 export class TodoPage implements OnInit {
   private todo: Todo;
+  public grouped: boolean;
 
   constructor(
     public todoService: TodoService,
@@ -24,6 +25,8 @@ export class TodoPage implements OnInit {
 
   ngOnInit() {
     this.todoService.getTodos();
+    this.todoService.getGroupedTodos();
+    this.grouped = false;
     // console.log(this.todoService.todos);
   }
 
@@ -35,6 +38,25 @@ export class TodoPage implements OnInit {
     ev.stopPropagation();
     todo.isCompleted = !todo.isCompleted;
     this.todoService.updateTodo(todo);
+  }
+
+  segmentChanged(ev: any) {
+    console.log("Segment changed", ev.detail.value);
+    if (ev.detail.value === 'all') {
+      this.grouped = false;
+    }
+    else {
+      this.grouped = true;
+    }
+  }
+
+  isEmptyGroup(group: string) {
+    if (group.trim().length === 0 || group === "undefined") {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
   createTodo(): void {
@@ -65,7 +87,7 @@ export class TodoPage implements OnInit {
         {
           name: 'group',
           type: 'text',
-          placeholder: 'group'
+          placeholder: 'Category'
         }
       ],
       buttons: [

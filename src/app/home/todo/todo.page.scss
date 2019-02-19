@@ -2,10 +2,12 @@ ion-item {
   --border-radius: 75px;
   --ion-item-background: var(--ion-color-light);
   padding-bottom: 0.5em;
+  --min-height: 0;
+
 }
 
 ion-icon {
-  font-size: 32px;
+  font-size: 24px;
   margin: 0;
 }
 
@@ -13,4 +15,33 @@ ion-label {
   margin-left: 1em;
   margin-bottom: 5px;
   margin-top: 5px;
+}
+
+.group-icon-all {
+  font-size: 10px;
+  margin-right: 1em;
+  color: green;
+}
+
+.group-icon-grouped {
+  font-size: 14px;
+  color: green;
+}
+
+.segment-height {
+  height: 2em;
+}
+
+.group-header {
+  --border-radius: 0px;
+  --min-height: 0;
+  --ion-item-background: var(--ion-color-light);
+  padding-bottom: 0em;
+  padding-top: 1em;
+  font-weight: bold;
+}
+
+.group-item {
+  --border-radius: 0px;
+  padding-bottom: 0em;
 }

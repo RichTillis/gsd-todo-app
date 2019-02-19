@@ -94,7 +94,7 @@ export class CompletedPage implements OnInit {
         {
           name: 'group',
           type: 'text',
-          placeholder: 'group'
+          placeholder: 'Category'
         }
       ],
       buttons: [
