@@ -45,7 +45,11 @@ export class EditTodoPage implements OnInit {
     this.todoService.updateTodo(this.todo);
     //then the successful toast and redirect
     this.saveSuccessfulToast();
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/home/todo');
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/home/todo');
   }
 
   async saveSuccessfulToast() {

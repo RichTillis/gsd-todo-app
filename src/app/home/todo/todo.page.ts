@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ModalController, AlertController } from "@ionic/angular";
+import { Router } from "@angular/router";
 
 import { CreateTodoPage } from "../../create-todo/create-todo.page";
 
@@ -17,7 +18,8 @@ export class TodoPage implements OnInit {
   constructor(
     public todoService: TodoService,
     private modalCtrl: ModalController,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -44,6 +46,10 @@ export class TodoPage implements OnInit {
         // modal.onDidDismiss().then(() => {});
         modal.present();
       });
+  }
+
+  routeToEdit(id: number) {
+    this.router.navigateByUrl('/edit/' + id);
   }
 
 

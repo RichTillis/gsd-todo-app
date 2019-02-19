@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AlertController, ModalController } from "@ionic/angular";
+import { Router } from "@angular/router";
 
 import { Todo } from "../../interfaces/todo.interface";
 import { CreateTodoPage } from "../../create-todo/create-todo.page";
@@ -18,12 +19,12 @@ export class CompletedPage implements OnInit {
   constructor(
     public alertController: AlertController,
     public todoService: TodoService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.todoService.getTodos();
-    // console.log(this.todoService.todos);
   }
 
   filterTodo(todo: Todo) {
@@ -34,6 +35,10 @@ export class CompletedPage implements OnInit {
     ev.stopPropagation();
     todo.isCompleted = !todo.isCompleted;
     this.todoService.updateTodo(todo);
+  }
+
+  routeToEdit(id: number) {
+    this.router.navigateByUrl('/edit/' + id);
   }
 
   deleteTodo(todo: Todo, ev: any) {

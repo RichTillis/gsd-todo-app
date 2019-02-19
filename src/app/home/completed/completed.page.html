@@ -6,16 +6,16 @@
 
 <ion-content padding>
   <ion-list lines="none">
-    <ion-item *ngFor="let todo of (todoService.todos | callback: filterTodo)" class="completed" routerLink="/edit/{{todo.id}}">
-      <ion-icon slot="start" name="checkmark-circle" (click)="toggleCompleted(todo, $event)" color="tertiary"></ion-icon>
-      <ion-icon class="trash" slot="end" name="close" (click)="deleteTodo(todo, $event)"></ion-icon>
+    <ion-item *ngFor="let todo of (todoService.todos | callback: filterTodo)" class="completed" (click)="routeToEdit(todo.id)">
+      <ion-icon slot="start" src="/assets/md-checkmark-circle.svg" (click)="toggleCompleted(todo, $event)" color="tertiary"></ion-icon>
+      <ion-icon class="trash" slot="end" src="/assets/md-close.svg" (click)="deleteTodo(todo, $event)"></ion-icon>
       <ion-label>{{ todo.title }}</ion-label>
     </ion-item>
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="presentCreateTodoPrompt()" color="tertiary">
-      <ion-icon name="add-circle"></ion-icon>
+      <ion-icon src="/assets/md-add.svg"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>
