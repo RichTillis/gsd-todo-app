@@ -7,6 +7,10 @@ const { SplashScreen, StatusBar } = Plugins;
   templateUrl: "app.component.html"
 })
 export class AppComponent {
+  public menuItems = [
+    {name:'Home', route:'/home', icon:'home'}
+  ];
+
   constructor() {
     SplashScreen.hide().catch(err => {
       console.warn(err);

@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { AlertController, ModalController } from "@ionic/angular";
+import { AlertController } from "@ionic/angular";
 import { Router } from "@angular/router";
 
 import { Todo } from "../../interfaces/todo.interface";
-import { CreateTodoPage } from "../../create-todo/create-todo.page";
 import { TodoService } from "../../services/todo.service";
 
 @Component({
@@ -19,7 +18,6 @@ export class CompletedPage implements OnInit {
   constructor(
     public alertController: AlertController,
     public todoService: TodoService,
-    private modalCtrl: ModalController,
     private router: Router
   ) { }
 
@@ -69,17 +67,6 @@ export class CompletedPage implements OnInit {
     });
 
     await alert.present();
-  }
-
-  createTodo(): void {
-    this.modalCtrl
-      .create({
-        component: CreateTodoPage
-      })
-      .then(modal => {
-        // modal.onDidDismiss().then(() => {});
-        modal.present();
-      });
   }
 
   async presentCreateTodoPrompt() {

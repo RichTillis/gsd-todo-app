@@ -4,6 +4,9 @@
       <ion-icon src="/assets/md-arrow-back.svg" class="back-arrow" (click)="goBack()"></ion-icon>
       <!-- <ion-back-button defaultHref="/home/todo"></ion-back-button> -->
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-icon src="/assets/md-settings.svg" class="settings-icon"></ion-icon>
+    </ion-buttons>
     <ion-title>{{ todo.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -15,9 +18,9 @@
   </ion-item>
 
   <ion-item>
-      <ion-label class="underline" position="stacked">Category</ion-label>
-      <ion-input type="text" [(ngModel)]="todo.group"></ion-input>
-    </ion-item>
+    <ion-label class="underline" position="stacked">Category</ion-label>
+    <ion-input type="text" [(ngModel)]="todo.group"></ion-input>
+  </ion-item>
 
   <ion-item>
     <ion-label class="underline" position="stacked">Details</ion-label>
