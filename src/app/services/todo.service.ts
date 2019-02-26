@@ -8,6 +8,7 @@ import { AlertController } from "@ionic/angular";
 import * as _ from 'lodash';
 
 import { StorageService } from "../services/storage.service";
+import { TodoCategory } from "../interfaces/todo-category.interface";
 
 @Injectable({
   providedIn: "root"
@@ -15,6 +16,7 @@ import { StorageService } from "../services/storage.service";
 export class TodoService {
   public todos: Todo[];
   public groupedTodos: any;
+  public todoCategories: TodoCategory[];
 
   constructor(
     private storageService: StorageService,
@@ -32,12 +34,29 @@ export class TodoService {
     });
   }
 
+  getTodoCategories() {
+    this.storageService.getCategories().then(categories => {
+      this.todoCategories = categories;
+      console.log(this.todoCategories);
+    });
+  }
+
+  getTodoCategory(todoCategoryId: string): TodoCategory {
+    let todoCat: any;
+
+    todoCat = _.filter(this.todoCategories, function (category) {
+      return category.id === todoCategoryId;
+    });
+
+    return todoCat[0];
+  }
+
   getGroupedTodos() {
     this.storageService.getTodos().then(todos => {
       this.groupedTodos = _.chain(todos)
         .filter(['isCompleted', false])
-        .groupBy(x => x.group)
-        .map((value, key) => ({ group: key, todos: value }))
+        .groupBy(x => x.categoryId)
+        .map((value, key) => ({ categoryId: key, todos: value }))
         .value();
       console.log(this.groupedTodos);
     });
@@ -57,10 +76,15 @@ export class TodoService {
     });
   }
 
+  deleteCategory(id: string) {
+    this.storageService.deleteCategory(id).then(() => {
+      this.getTodos();
+      this.getTodoCategories();
+      this.getGroupedTodos();
+    });
+  }
+
   createTodo(newTodo: Todo): void {
-    // this.presentCreateTodoPrompt().then(() => {
-    //   this.getTodos();
-    // });
     this.storageService.createTodo(newTodo).then(() => {
       this.getTodos();
       this.getGroupedTodos();
@@ -98,11 +122,10 @@ export class TodoService {
   }
 
   instantiateTodo(title: string): Todo {
-    let newDate = new Date().toISOString();
+    let newDate = new Date().getTime().toString();
     return {
       id: newDate,
       title: title,
-      group: "",
       details: "",
       isCompleted: false,
       createdAt: newDate,

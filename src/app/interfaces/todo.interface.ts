@@ -1,9 +1,14 @@
+import { TodoCategory } from "./todo-category.interface";
+
 export interface Todo {
   id: string;
-  group?: string;
   title: string;
   details: string;
   isCompleted: boolean;
   createdAt: string;
   completedAt: string;
+  categoryId?: string;
+  categoryName?: string;
+  categoryColorName?: string;
+  categoryColorCode?: string;
 }

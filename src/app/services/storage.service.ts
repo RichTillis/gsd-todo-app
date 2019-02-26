@@ -2,14 +2,16 @@ import { Injectable } from "@angular/core";
 import { Storage } from "@ionic/storage";
 
 import { Todo } from "../interfaces/todo.interface";
+import { TodoCategory } from "../interfaces/todo-category.interface";
 
 const TODO_KEY = "my-todos";
+const CAT_KEY = "my-categories";
 
 @Injectable({
   providedIn: "root"
 })
 export class StorageService {
-  constructor(private storage: Storage) {}
+  constructor(private storage: Storage) { }
 
   async createTodo(newTodo: Todo) {
     const todos = await this.storage.get(TODO_KEY);
@@ -21,8 +23,44 @@ export class StorageService {
     }
   }
 
+  async createTodoCategory(newCategory: TodoCategory) {
+    const categories = await this.storage.get(CAT_KEY);
+    if (categories) {
+      categories.push(newCategory);
+      return this.storage.set(CAT_KEY, categories);
+    } else {
+      return this.storage.set(CAT_KEY, [newCategory]);
+    }
+  }
+
+  async initializeTodoCategories() {
+    let firstCat: TodoCategory = {
+      id: '1',
+      name: 'School',
+      colorCode: '#808080',
+      colorName: 'gray'
+    }
+    let secondCat: TodoCategory = {
+      id: '2',
+      name: 'Work',
+      colorCode: '#000000',
+      colorName: 'black'
+    }
+    let thirdCat: TodoCategory = {
+      id: '3',
+      name: 'Today',
+      colorCode: '#811a74',
+      colorName: 'magenta'
+    }
+    this.storage.set(CAT_KEY, [firstCat, secondCat, thirdCat]);
+  }
+
   getTodos(): Promise<Todo[]> {
     return this.storage.get(TODO_KEY);
+  }
+
+  getCategories(): Promise<TodoCategory[]> {
+    return this.storage.get(CAT_KEY);
   }
 
   async updateTodo(todo: Todo) {
@@ -42,6 +80,23 @@ export class StorageService {
     return this.storage.set(TODO_KEY, newTodos);
   }
 
+  async updateTodoCategory(todoCategory: TodoCategory) {
+    const categories = await this.storage.get(CAT_KEY);
+    if (!categories || categories.length === 0) {
+      return null;
+    }
+
+    let newCategories: TodoCategory[] = [];
+    for (let i of categories) {
+      if (i.id === todoCategory.id) {
+        newCategories.push(todoCategory);
+      } else {
+        newCategories.push(i);
+      }
+    }
+    return this.storage.set(CAT_KEY, newCategories);
+  }
+
   async deleteTodo(id: string) {
     const todos = await this.storage.get(TODO_KEY);
     if (!todos || todos.length === 0) {
@@ -56,10 +111,24 @@ export class StorageService {
     return this.storage.set(TODO_KEY, toKeep);
   }
 
+  async deleteCategory(id: string) {
+    const categories = await this.storage.get(CAT_KEY);
+    if (!categories || categories.length === 0) {
+      return null;
+    }
+    let toKeep: TodoCategory[] = [];
+    for (let i of categories) {
+      if (i.id !== id) {
+        toKeep.push(i);
+      }
+    }
+    return this.storage.set(CAT_KEY, toKeep);
+  }
+
   getTodo(id: string): Promise<any> {
-    console.log(id);
+    // console.log(id);
     return this.storage.get(TODO_KEY).then((todos: Todo[]) => {
-      console.log(todos);
+      // console.log(todos);
       if (!todos || todos.length === 0) {
         return null;
       }
@@ -69,7 +138,8 @@ export class StorageService {
           returnTodo = i;
           break;
         }
-      }console.log(returnTodo)
+      }
+      // console.log(returnTodo)
       return returnTodo;
     });
   }

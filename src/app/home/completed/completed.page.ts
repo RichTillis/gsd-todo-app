@@ -96,14 +96,11 @@ export class CompletedPage implements OnInit {
           text: 'Ok',
           handler: (data) => {
             console.log(data);
-            // let newDate = new Date().toUTCString();
-            let newDate = Date.now().toString();
-            // console.log(newNewDate);
+            let newDate = new Date().getTime().toString()
 
             this.todo = {
               id: newDate,
               title: data.title,
-              group: data.group,
               details: "",
               isCompleted: false,
               createdAt: newDate,
@@ -117,5 +114,9 @@ export class CompletedPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  goToSettings() {
+    this.router.navigateByUrl('/settings');
   }
 }

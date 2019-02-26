@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-icon src="/assets/md-arrow-back.svg" class="back-arrow" (click)="goBack()"></ion-icon>
+      <!-- <ion-back-button defaultHref="/home/todo"></ion-back-button> -->
+    </ion-buttons>
+    <ion-title>Categories</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list lines="none">
+    <ion-item *ngFor="let category of (todoService.todoCategories)" (click)="presentTodoCategoryCreateModal(category)">
+      <ion-icon slot="start" src="/assets/logo-ionitron.svg" [ngStyle]="setIconColor(category.colorCode)"></ion-icon>
+      <ion-icon class="trash" slot="end" src="/assets/md-close.svg" (click)="deleteCategory(category, $event)"></ion-icon>
+      <ion-label>
+        {{ category.name }}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="presentTodoCategoryCreateModal(newTodoCategory)" color="tertiary">
+      <ion-icon src="/assets/md-add.svg"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

@@ -10,6 +10,10 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 
+import { TodoCategoryCreatePageModule } from "./pages/todo-category-create/todo-category-create.module";
+import { CreateTodoPageModule } from "./pages/create-todo/create-todo.module";
+
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -17,6 +21,8 @@ import { AppComponent } from "./app.component";
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    TodoCategoryCreatePageModule,
+    CreateTodoPageModule,
     IonicStorageModule.forRoot()
   ],
   providers: [

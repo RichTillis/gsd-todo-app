@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="end">
-        <ion-icon src="/assets/md-settings.svg" class="settings-icon"></ion-icon>
+      <ion-icon src="/assets/md-settings.svg" class="settings-icon" (click)="goToSettings()"></ion-icon>
     </ion-buttons>
     <ion-title>Still To Do</ion-title>
   </ion-toolbar>
@@ -24,31 +24,32 @@
       <ion-label>
         <ion-text>{{ todo.title }}</ion-text>
         <p>
-          <ion-icon src="/assets/md-square.svg" class="group-icon-all"></ion-icon>{{todo.group}}
+          <ion-icon src="/assets/md-square.svg" class="group-icon-all" [ngStyle]="setIconColor(todo.categoryColorCode)"
+            *ngIf="!isEmpty(todo.categoryId)"></ion-icon>{{todo.categoryName}}
         </p>
       </ion-label>
     </ion-item>
   </ion-list>
 
-  <ion-list lines="full" *ngIf="grouped">
+  <ion-list lines="
+            full" *ngIf="grouped">
     <ion-item-group *ngFor="let group of (todoService.groupedTodos)">
       <ion-item class="group-header ">
-        <ion-icon src="/assets/md-square.svg" class="group-icon-grouped"></ion-icon>
-        <ion-label *ngIf="isEmptyGroup(group.group)">No Category</ion-label>
-        <ion-label *ngIf="!isEmptyGroup(group.group)">{{ group.group }}</ion-label>
+        <ion-icon src="/assets/md-water.svg" class="group-icon-grouped" [ngStyle]="getColorCode(group.categoryId)" *ngIf="!isEmpty(group.categoryId)"></ion-icon>
+        <ion-label *ngIf="isEmpty(group.categoryId)">No Category</ion-label>
+        <ion-label *ngIf="!isEmpty(group.categoryId)">{{ getCategoryName(group.categoryId) }}</ion-label>
       </ion-item>
       <ion-item *ngFor="let todo of (group.todos | callback: filterTodo)" (click)="routeToEdit(todo.id)" class="group-item">
         <ion-icon slot="start" src="/assets/md-square-outline.svg" (click)="toggleCompleted(todo, $event)"></ion-icon>
         <ion-label>
           <ion-text>{{ todo.title }}</ion-text>
-          <p> {{ todo.details }} </p>
         </ion-label>
       </ion-item>
     </ion-item-group>
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="presentCreateTodoPrompt()" color="tertiary">
+    <ion-fab-button (click)="presentCreateTodoModal()" color="tertiary">
       <ion-icon src="/assets/md-add.svg"></ion-icon>
     </ion-fab-button>
   </ion-fab>

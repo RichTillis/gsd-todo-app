@@ -7,6 +7,8 @@ const routes: Routes = [
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
   { path: 'edit', loadChildren: './edit-todo/edit-todo.module#EditTodoPageModule' },
   { path: 'edit/:id', loadChildren: './edit-todo/edit-todo.module#EditTodoPageModule' },
+  { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsPageModule' },
+  { path: 'create-todo', loadChildren: './pages/create-todo/create-todo.module#CreateTodoPageModule' },
 ];
 
 @NgModule({

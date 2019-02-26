@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { AlertController } from "@ionic/angular";
+import { AlertController, ModalController } from "@ionic/angular";
 import { Router } from "@angular/router";
 
 import { TodoService } from "../../services/todo.service";
 import { Todo } from "../../interfaces/todo.interface";
+import { CreateTodoPage } from '../../pages/create-todo/create-todo.page';
 
 @Component({
   selector: "app-todo",
@@ -17,12 +18,14 @@ export class TodoPage implements OnInit {
   constructor(
     public todoService: TodoService,
     public alertController: AlertController,
-    private router: Router
+    private router: Router,
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
     this.todoService.getTodos();
     this.todoService.getGroupedTodos();
+    this.todoService.getTodoCategories();
     this.grouped = false;
     // console.log(this.todoService.todos);
   }
@@ -38,7 +41,7 @@ export class TodoPage implements OnInit {
   }
 
   segmentChanged(ev: any) {
-    console.log("Segment changed", ev.detail.value);
+    // console.log("Segment changed", ev.detail.value);
     if (ev.detail.value === 'all') {
       this.grouped = false;
     }
@@ -47,8 +50,8 @@ export class TodoPage implements OnInit {
     }
   }
 
-  isEmptyGroup(group: string) {
-    if (group.trim().length === 0 || group === "undefined") {
+  isEmpty(id: string) {
+    if (!id || id === "undefined") {
       return true;
     }
     else {
@@ -87,13 +90,11 @@ export class TodoPage implements OnInit {
         }, {
           text: 'Ok',
           handler: (data) => {
-            console.log(data);
-            let newDate = new Date().toUTCString();
+            let newDate = new Date().getTime().toString();
 
             this.todo = {
               id: newDate,
               title: data.title,
-              group: data.group,
               details: "",
               isCompleted: false,
               createdAt: newDate,
@@ -108,4 +109,40 @@ export class TodoPage implements OnInit {
 
     await alert.present();
   }
+
+  async presentCreateTodoModal() {
+    const modal = await this.modalController.create({
+      component: CreateTodoPage,
+      componentProps: {}
+    });
+    return await modal.present();
+  }
+
+  goToSettings() {
+    this.router.navigateByUrl('/settings');
+  }
+
+  setIconColor(color: string) {
+    if (!color) {
+      color = 'transparent';
+    }
+    let style = {
+      'color': color
+    }
+    return style;
+  }
+
+  getColorCode(id: string) {
+    let returnVal = this.todoService.getTodoCategory(id);
+    let style = {
+      'color': returnVal.colorCode
+    }
+    return style;
+  }
+
+  getCategoryName(id: string) {
+    let returnVal = this.todoService.getTodoCategory(id);
+    return returnVal.name;
+  }
+
 }
