@@ -31,8 +31,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-list lines="
-            full" *ngIf="grouped">
+  <ion-list lines="full" *ngIf="grouped">
     <ion-item-group *ngFor="let group of (todoService.groupedTodos)">
       <ion-item class="group-header ">
         <ion-icon src="/assets/md-water.svg" class="group-icon-grouped" [ngStyle]="getColorCode(group.categoryId)" *ngIf="!isEmpty(group.categoryId)"></ion-icon>

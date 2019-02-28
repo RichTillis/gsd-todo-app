@@ -19,7 +19,7 @@ export class TodoService {
   public todoCategories: TodoCategory[];
 
   constructor(
-    private storageService: StorageService,
+    public storageService: StorageService,
     public alertController: AlertController
   ) { }
 
@@ -30,14 +30,15 @@ export class TodoService {
   getTodos() {
     this.storageService.getTodos().then(todos => {
       this.todos = todos;
-      console.log(this.todos);
+      this.getGroupedTodos();
+      // console.log(this.todos);
     });
   }
 
   getTodoCategories() {
     this.storageService.getCategories().then(categories => {
       this.todoCategories = categories;
-      console.log(this.todoCategories);
+      // console.log(this.todoCategories);
     });
   }
 
@@ -47,7 +48,6 @@ export class TodoService {
     todoCat = _.filter(this.todoCategories, function (category) {
       return category.id === todoCategoryId;
     });
-
     return todoCat[0];
   }
 
@@ -58,36 +58,53 @@ export class TodoService {
         .groupBy(x => x.categoryId)
         .map((value, key) => ({ categoryId: key, todos: value }))
         .value();
-      console.log(this.groupedTodos);
+      // console.log(this.groupedTodos);
     });
   }
 
   updateTodo(todo: Todo) {
     this.storageService.updateTodo(todo).then(() => {
       this.getTodos();
-      this.getGroupedTodos();
     });
   }
 
   deleteTodo(id: string) {
     this.storageService.deleteTodo(id).then(() => {
       this.getTodos();
-      this.getGroupedTodos();
     });
   }
 
   deleteCategory(id: string) {
+    // console.log('deleting id: ', id);
+    let parentThis = this;
     this.storageService.deleteCategory(id).then(() => {
-      this.getTodos();
+      this.unassignTodosWithDeletedCategory(parentThis, id)
       this.getTodoCategories();
-      this.getGroupedTodos();
     });
+  }
+
+  unassignTodosWithDeletedCategory(parentThis: any, id: string): any {
+    this.todos.forEach(function (todo) {
+      if (todo.categoryId === id) {
+        // console.log('found one', todo);
+        let newTodo: Todo = {
+          completedAt: todo.completedAt,
+          createdAt: todo.createdAt,
+          details: todo.details,
+          id: todo.id,
+          isCompleted: todo.isCompleted,
+          title: todo.title
+        }
+
+        parentThis.updateTodo(newTodo);
+      }
+    })
+    return 0;
   }
 
   createTodo(newTodo: Todo): void {
     this.storageService.createTodo(newTodo).then(() => {
       this.getTodos();
-      this.getGroupedTodos();
     });
   }
 
@@ -117,7 +134,6 @@ export class TodoService {
     });
     await alert.present().then(() => {
       this.getTodos();
-      this.getGroupedTodos();
     });
   }
 

@@ -11,7 +11,7 @@
 
   <ion-item>
     <ion-label class="underline" position="stacked">Name</ion-label>
-    <ion-input type="text" [(ngModel)]="category.title"></ion-input>
+    <ion-input type="text" [(ngModel)]="category.name"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label class="underline" position="stacked">Color</ion-label>
@@ -21,23 +21,45 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <ion-button (click)="selectColor('red','#ff0000')">
-          <ion-icon src="/assets/md-water.svg" class="color red"></ion-icon>
+        <ion-button (click)="selectColor('gray','#808080')">
+          <ion-icon src="/assets/md-water.svg" class="color gray"></ion-icon>
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button (click)="selectColor('pink','#FFC0CB')">
-          <ion-icon src="/assets/md-water.svg" class="color pink"></ion-icon>
+        <ion-button (click)="selectColor('black','#000000')">
+          <ion-icon src="/assets/md-water.svg" class="color black"></ion-icon>
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button (click)="selectColor('yellow','#ffff00')">
-          <ion-icon src="/assets/md-water.svg" class="color yellow"></ion-icon>
+        <ion-button (click)="selectColor('magenta','#811a74')">
+          <ion-icon src="/assets/md-water.svg" class="color magenta"></ion-icon>
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button (click)="selectColor('orange','#ffa500')">
-          <ion-icon src="/assets/md-water.svg" class="color orange"></ion-icon>
+        <ion-button (click)="selectColor('white', '#ffffff')">
+          <ion-icon src="/assets/md-water.svg" class="color white"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button (click)="selectColor('red-1','#cc0000')">
+          <ion-icon src="/assets/md-water.svg" class="color" [ngStyle]="setIconColor('#cc0000')"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="selectColor('red-2','#a30000')">
+          <ion-icon src="/assets/md-water.svg" class="color" [ngStyle]="setIconColor('#a30000')"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="selectColor('red-3','#8b0000')">
+          <ion-icon src="/assets/md-water.svg" class="color" [ngStyle]="setIconColor('#8b0000')"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="selectColor('red-4','#470000')">
+          <ion-icon src="/assets/md-water.svg" class="color" [ngStyle]="setIconColor('#470000')"></ion-icon>
         </ion-button>
       </ion-col>
     </ion-row>
@@ -63,28 +85,7 @@
         </ion-button>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button (click)="selectColor('gray','#808080')">
-          <ion-icon src="/assets/md-water.svg" class="color gray"></ion-icon>
-        </ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button (click)="selectColor('black','#000000')">
-          <ion-icon src="/assets/md-water.svg" class="color black"></ion-icon>
-        </ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button (click)="selectColor('magenta','#811a74')">
-          <ion-icon src="/assets/md-water.svg" class="color magenta"></ion-icon>
-        </ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button (click)="selectColor('white', '#ffffff')">
-          <ion-icon src="/assets/md-water.svg" class="color white"></ion-icon>
-        </ion-button>
-      </ion-col>
-    </ion-row>
+
   </ion-grid>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">

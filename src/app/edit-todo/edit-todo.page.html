@@ -19,7 +19,7 @@
 
   <ion-item>
     <ion-label>Category</ion-label>
-    <ion-select [(ngModel)]="selectedCategory" >
+    <ion-select [(ngModel)]="selectedCategory" interface="popover">
       <ion-select-option *ngFor="let category of todoService.todoCategories" [value]="category">{{category.name}}</ion-select-option>
     </ion-select>
   </ion-item>

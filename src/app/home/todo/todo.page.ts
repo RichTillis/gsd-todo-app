@@ -51,7 +51,9 @@ export class TodoPage implements OnInit {
   }
 
   isEmpty(id: string) {
-    if (!id || id === "undefined") {
+    // console.log(id);
+    if (!id || id === undefined || typeof id === 'undefined' || id === "undefined") {
+      // console.log('yep, its undefined')
       return true;
     }
     else {
@@ -123,9 +125,9 @@ export class TodoPage implements OnInit {
   }
 
   setIconColor(color: string) {
-    if (!color) {
-      color = 'transparent';
-    }
+    // if (!color) {
+    //   color = 'transparent';
+    // }
     let style = {
       'color': color
     }
@@ -141,8 +143,14 @@ export class TodoPage implements OnInit {
   }
 
   getCategoryName(id: string) {
-    let returnVal = this.todoService.getTodoCategory(id);
-    return returnVal.name;
+    // if (!id || id === undefined || typeof id === 'undefined' || id === "undefined") {
+    //   return "No Category";
+    // } else {
+      //something go f'd up with the todo id.  What happened???????  
+      // console.log(id);
+      let returnVal = this.todoService.getTodoCategory(id);
+      return returnVal.name;
+    // }
   }
 
 }

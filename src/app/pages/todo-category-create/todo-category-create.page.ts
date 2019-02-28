@@ -27,6 +27,13 @@ export class TodoCategoryCreatePage implements OnInit {
     this.category.colorCode = colorCode;
   }
 
+  setIconColor(color: string) {
+    let style = {
+      'color': color
+    }
+    return style;
+  }
+
   saveTodo() {
     if (this.isCategoryValid()) {
       if (this.category.id.length > 0) {
