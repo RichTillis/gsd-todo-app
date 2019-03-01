@@ -78,12 +78,13 @@ export class TodoService {
     // console.log('deleting id: ', id);
     let parentThis = this;
     this.storageService.deleteCategory(id).then(() => {
-      this.unassignTodosWithDeletedCategory(parentThis, id)
-      this.getTodoCategories();
+      this.unassignTodosWithDeletedCategory(parentThis, id);
     });
+    this.getTodos();
+    this.getTodoCategories();
   }
 
-  unassignTodosWithDeletedCategory(parentThis: any, id: string): any {
+  unassignTodosWithDeletedCategory(parentThis: any, id: string) {
     this.todos.forEach(function (todo) {
       if (todo.categoryId === id) {
         // console.log('found one', todo);
@@ -98,8 +99,7 @@ export class TodoService {
 
         parentThis.updateTodo(newTodo);
       }
-    })
-    return 0;
+    });
   }
 
   createTodo(newTodo: Todo): void {
