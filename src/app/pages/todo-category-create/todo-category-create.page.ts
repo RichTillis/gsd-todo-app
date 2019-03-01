@@ -19,11 +19,10 @@ export class TodoCategoryCreatePage implements OnInit {
     public alertController: AlertController) { }
 
   ngOnInit() {
-    console.log(this.category);
+    // console.log(this.category);
   }
 
-  selectColor(colorName: string, colorCode: string) {
-    this.category.colorName = colorName;
+  selectColor(colorCode: string) {
     this.category.colorCode = colorCode;
   }
 
@@ -58,7 +57,7 @@ export class TodoCategoryCreatePage implements OnInit {
   }
 
   isCategoryValid() {
-    if (this.category.name.length > 0 && this.category.colorName.length > 0) {
+    if (this.category.name.length > 0 && this.category.colorCode.length > 0) {
       return true;
     }
     else {

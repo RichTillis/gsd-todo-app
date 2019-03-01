@@ -29,8 +29,7 @@ export class SettingsPage implements OnInit {
     this.newTodoCategory = {
       id: '',
       name: '',
-      colorCode: '',
-      colorName: ''
+      colorCode: ''
     }
   }
 
@@ -77,7 +76,7 @@ export class SettingsPage implements OnInit {
         {
           text: "Yes",
           handler: () => {
-            console.log('delete me');
+            // console.log('delete me');
             this.todoService.deleteCategory(category.id);
           }
         }

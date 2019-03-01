@@ -49,7 +49,6 @@ export class EditTodoPage implements OnInit {
     if (this.selectedCategory) {
       this.todo.categoryId = this.selectedCategory.id;
       this.todo.categoryName = this.selectedCategory.name;
-      this.todo.categoryColorName = this.selectedCategory.colorName;
       this.todo.categoryColorCode = this.selectedCategory.colorCode;
     }
     console.log(this.todo);
