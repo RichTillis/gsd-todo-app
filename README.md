@@ -11,14 +11,15 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 Be sure to have the following software installed 
 
-  Node 9 (or higher) & NPM 6 (or higher)
+* #### Node 9+
+* #### NPM 6+
   [Nodejs.org](https://nodejs.org/en/) - Follow directions based on your OS
 
-Angular 7
+* #### Angular 7
 ```
 npm install @angular/cli -g
 ```
-Ionic 4
+* #### Ionic 4
 ```
 npm install -g ionic
 ```
@@ -29,7 +30,7 @@ Installation to get a development environment up and running is straight-forward
 
 Clone the repository
 ```
-git clone git@github.com:RichTillis/gsd-todo-app.git
+git clone https://github.com/RichTillis/gsd-todo-app.git
 ```
 Change Directory into the project directory 
 ```
@@ -49,7 +50,7 @@ If all goes well, your default browser will open and a new tab will eventually d
 ## Running the tests
 Once tests exist I will:
 
-Explain how to run the automated tests for this system
+Explain how to run the automated tests for this app
 
 
 ### Break down into end to end tests
@@ -89,7 +90,7 @@ I don't yet have a contributing document for details on our code of conduct, and
 
 
 ## Versioning
-I'll be attempting to use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/RichTillis/gsd-todo-app/releases).
+I'll be attempting to use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/RichTillis/gsd-todo-app/tags).
 
 
 ## Authors
