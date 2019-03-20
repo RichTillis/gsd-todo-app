@@ -9,12 +9,17 @@ import * as _ from 'lodash';
 
 import { StorageService } from "../services/storage.service";
 import { TodoCategory } from "../interfaces/todo-category.interface";
+import { BehaviorSubject, Observable, of } from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
 export class TodoService {
   public todos: Todo[];
+
+  private todosSubject$ = new BehaviorSubject<Todo[]>(this.todos);
+  todosChanged$ = this.todosSubject$.asObservable();
+
   public groupedTodos: any;
   public todoCategories: TodoCategory[];
 
@@ -30,6 +35,7 @@ export class TodoService {
   getTodos() {
     this.storageService.getTodos().then(todos => {
       this.todos = todos;
+      this.todosSubject$.next(this.todos);
       this.getGroupedTodos();
       // console.log(this.todos);
     });
@@ -102,10 +108,13 @@ export class TodoService {
     });
   }
 
-  createTodo(newTodo: Todo): void {
-    this.storageService.createTodo(newTodo).then(() => {
+  createTodo(newTodo: Todo): Observable<Todo[]> {
+    this.storageService.createTodo(newTodo).then((updatedTodos) => {
+      this.todos = updatedTodos;
+      this.todosSubject$.next(this.todos);
       this.getTodos();
     });
+    return of(this.todos);
   }
 
   async presentCreateTodoPrompt() {

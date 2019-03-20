@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { TodoService } from "../../services/todo.service";
 import { Todo } from "../../interfaces/todo.interface";
 import { CreateTodoPage } from '../../pages/create-todo/create-todo.page';
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-todo",
@@ -14,6 +15,8 @@ import { CreateTodoPage } from '../../pages/create-todo/create-todo.page';
 export class TodoPage implements OnInit {
   private todo: Todo;
   public grouped: boolean;
+  todos: Todo[];
+  todosChangedSub: Subscription;
 
   constructor(
     public todoService: TodoService,
@@ -28,6 +31,13 @@ export class TodoPage implements OnInit {
     this.todoService.getTodoCategories();
     this.grouped = false;
     // console.log(this.todoService.todos);
+    this.todosChangedSub = this.todoService.todosChanged$.subscribe(todos => this.todos = todos);
+  }
+
+  ngOnDestroy(): void {
+    if (this.todosChangedSub) {
+      this.todosChangedSub.unsubscribe();
+    }
   }
 
   filterTodo(todo: Todo) {
@@ -146,10 +156,10 @@ export class TodoPage implements OnInit {
     // if (!id || id === undefined || typeof id === 'undefined' || id === "undefined") {
     //   return "No Category";
     // } else {
-      //something go f'd up with the todo id.  What happened???????  
-      // console.log(id);
-      let returnVal = this.todoService.getTodoCategory(id);
-      return returnVal.name;
+    //something go f'd up with the todo id.  What happened???????  
+    // console.log(id);
+    let returnVal = this.todoService.getTodoCategory(id);
+    return returnVal.name;
     // }
   }
 
