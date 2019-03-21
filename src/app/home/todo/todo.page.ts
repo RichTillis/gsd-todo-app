@@ -92,16 +92,23 @@ export class TodoPage implements OnInit {
   }
 
   getColorCode(id: string) {
+    let style = null;
     let returnVal = this.todoService.getTodoCategory(id);
-    let style = {
-      'color': returnVal.colorCode
+    if (returnVal !== undefined) {
+      style = {
+        'color': returnVal.colorCode
+      }
     }
     return style;
   }
 
   getCategoryName(id: string) {
     let returnVal = this.todoService.getTodoCategory(id);
-    return returnVal.name;
+    if (returnVal !== undefined) {
+      return returnVal.name;
+    }
+    return null
+
   }
 
 }
