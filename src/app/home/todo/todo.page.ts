@@ -31,7 +31,7 @@ export class TodoPage implements OnInit {
     this.todoService.getGroupedTodos();
     this.todoService.getTodoCategories();
 
-    this.grouped = false;
+    this.grouped = true;
     this.todosChangedSub = this.todoService.todosChanged$.subscribe(todos => this.todos = todos);
     this.groupedTodosChangedSub = this.todoService.groupedTodosChanged$.subscribe(groupedTodos => this.groupedTodos = groupedTodos);
   }
