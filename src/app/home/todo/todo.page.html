@@ -7,11 +7,11 @@
   </ion-toolbar>
   <ion-toolbar color="secondary">
     <ion-segment (ionChange)="segmentChanged($event)" class="segment-height">
-      <ion-segment-button checked value="all">
-        <ion-label>All</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="group">
+      <ion-segment-button checked value="group">
         <ion-label>By Category</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="all">
+        <ion-label>Single List</ion-label>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -35,7 +35,8 @@
   <ion-list lines="full" *ngIf="grouped">
     <ion-item-group *ngFor="let group of (groupedTodos)">
       <ion-item class="group-header ">
-        <ion-icon src="/assets/md-water.svg" class="group-icon-grouped" [ngStyle]="getColorCode(group.categoryId)" *ngIf="!isEmpty(group.categoryId)"></ion-icon>
+        <ion-icon src="/assets/md-water.svg" class="group-icon-grouped" [ngStyle]="getColorCode(group.categoryId)"
+          *ngIf="!isEmpty(group.categoryId)"></ion-icon>
         <ion-label *ngIf="isEmpty(group.categoryId)">No Category</ion-label>
         <ion-label *ngIf="!isEmpty(group.categoryId)">{{ getCategoryName(group.categoryId) }}</ion-label>
       </ion-item>
