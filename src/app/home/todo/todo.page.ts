@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { AlertController, ModalController } from "@ionic/angular";
+import { ModalController } from "@ionic/angular";
 import { Router } from "@angular/router";
 
 import { TodoService } from "../../services/todo.service";
@@ -13,14 +13,15 @@ import { Subscription } from "rxjs";
   styleUrls: ["./todo.page.scss"]
 })
 export class TodoPage implements OnInit {
-  private todo: Todo;
-  public grouped: boolean;
+  grouped: boolean;
+  groupedTodos: any;
+  groupedTodosChangedSub: Subscription;
+
   todos: Todo[];
   todosChangedSub: Subscription;
 
   constructor(
     public todoService: TodoService,
-    public alertController: AlertController,
     private router: Router,
     private modalController: ModalController
   ) { }
@@ -29,14 +30,18 @@ export class TodoPage implements OnInit {
     this.todoService.getTodos();
     this.todoService.getGroupedTodos();
     this.todoService.getTodoCategories();
+
     this.grouped = false;
-    // console.log(this.todoService.todos);
     this.todosChangedSub = this.todoService.todosChanged$.subscribe(todos => this.todos = todos);
+    this.groupedTodosChangedSub = this.todoService.groupedTodosChanged$.subscribe(groupedTodos => this.groupedTodos = groupedTodos);
   }
 
   ngOnDestroy(): void {
     if (this.todosChangedSub) {
       this.todosChangedSub.unsubscribe();
+    }
+    if (this.groupedTodosChangedSub) {
+      this.groupedTodosChangedSub.unsubscribe();
     }
   }
 
@@ -51,19 +56,11 @@ export class TodoPage implements OnInit {
   }
 
   segmentChanged(ev: any) {
-    // console.log("Segment changed", ev.detail.value);
-    if (ev.detail.value === 'all') {
-      this.grouped = false;
-    }
-    else {
-      this.grouped = true;
-    }
+    this.grouped = ev.detail.value === 'all' ? false : true;
   }
 
   isEmpty(id: string) {
-    // console.log(id);
     if (!id || id === undefined || typeof id === 'undefined' || id === "undefined") {
-      // console.log('yep, its undefined')
       return true;
     }
     else {
@@ -73,53 +70,6 @@ export class TodoPage implements OnInit {
 
   routeToEdit(id: number) {
     this.router.navigateByUrl('/edit/' + id);
-  }
-
-
-  async presentCreateTodoPrompt() {
-    const alert = await this.alertController.create({
-      header: 'New Todo',
-      inputs: [
-        {
-          name: 'title',
-          type: 'text',
-          placeholder: 'Whaddua gotta get done?'
-        },
-        {
-          name: 'group',
-          type: 'text',
-          placeholder: 'Category'
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Ok',
-          handler: (data) => {
-            let newDate = new Date().getTime().toString();
-
-            this.todo = {
-              id: newDate,
-              title: data.title,
-              details: "",
-              isCompleted: false,
-              createdAt: newDate,
-              completedAt: ""
-            };
-            this.todoService.createTodo(this.todo);
-            console.log('Confirm Ok');
-          }
-        }
-      ]
-    });
-
-    await alert.present();
   }
 
   async presentCreateTodoModal() {
@@ -135,9 +85,6 @@ export class TodoPage implements OnInit {
   }
 
   setIconColor(color: string) {
-    // if (!color) {
-    //   color = 'transparent';
-    // }
     let style = {
       'color': color
     }
@@ -153,14 +100,8 @@ export class TodoPage implements OnInit {
   }
 
   getCategoryName(id: string) {
-    // if (!id || id === undefined || typeof id === 'undefined' || id === "undefined") {
-    //   return "No Category";
-    // } else {
-    //something go f'd up with the todo id.  What happened???????  
-    // console.log(id);
     let returnVal = this.todoService.getTodoCategory(id);
     return returnVal.name;
-    // }
   }
 
 }

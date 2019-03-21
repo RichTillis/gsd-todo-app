@@ -1,9 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { AlertController } from "@ionic/angular";
+import { AlertController, ModalController } from "@ionic/angular";
 import { Router } from "@angular/router";
+
+import { CreateTodoPage } from '../../pages/create-todo/create-todo.page';
 
 import { Todo } from "../../interfaces/todo.interface";
 import { TodoService } from "../../services/todo.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-completed",
@@ -11,18 +14,25 @@ import { TodoService } from "../../services/todo.service";
   styleUrls: ["./completed.page.scss"]
 })
 export class CompletedPage implements OnInit {
-  private todo: Todo;
-
-  public todos: Todo[];
+  todos: Todo[];
+  todosChangedSub: Subscription;
 
   constructor(
     public alertController: AlertController,
     public todoService: TodoService,
-    private router: Router
+    private router: Router,
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
     this.todoService.getTodos();
+    this.todosChangedSub = this.todoService.todosChanged$.subscribe(todos => this.todos = todos);
+  }
+
+  ngOnDestroy(): void {
+    if (this.todosChangedSub) {
+      this.todosChangedSub.unsubscribe();
+    }
   }
 
   filterTodo(todo: Todo) {
@@ -37,6 +47,14 @@ export class CompletedPage implements OnInit {
 
   routeToEdit(id: number) {
     this.router.navigateByUrl('/edit/' + id);
+  }
+
+  async presentCreateTodoModal() {
+    const modal = await this.modalController.create({
+      component: CreateTodoPage,
+      componentProps: {}
+    });
+    return await modal.present();
   }
 
   deleteTodo(todo: Todo, ev: any) {
@@ -61,53 +79,6 @@ export class CompletedPage implements OnInit {
           text: "Yes",
           handler: () => {
             this.todoService.deleteTodo(todo.id);
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-
-  async presentCreateTodoPrompt() {
-    const alert = await this.alertController.create({
-      header: 'New Todo',
-      inputs: [
-        {
-          name: 'title',
-          type: 'text',
-          placeholder: 'Whaddua gotta get done?'
-        },
-        {
-          name: 'group',
-          type: 'text',
-          placeholder: 'Category'
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Ok',
-          handler: (data) => {
-            console.log(data);
-            let newDate = new Date().getTime().toString()
-
-            this.todo = {
-              id: newDate,
-              title: data.title,
-              details: "",
-              isCompleted: false,
-              createdAt: newDate,
-              completedAt: ""
-            };
-            this.todoService.createTodo(this.todo);
-            console.log('Confirm Ok');
           }
         }
       ]
