@@ -15,13 +15,17 @@ import { BehaviorSubject, Observable, of } from "rxjs";
   providedIn: "root"
 })
 export class TodoService {
-  public todos: Todo[];
-
+  todos: Todo[];
   private todosSubject$ = new BehaviorSubject<Todo[]>(this.todos);
   todosChanged$ = this.todosSubject$.asObservable();
 
-  public groupedTodos: any;
-  public todoCategories: TodoCategory[];
+  todoCategories: TodoCategory[];
+  private todoCategoriesSubject$ = new BehaviorSubject<TodoCategory[]>(this.todoCategories);
+  todoCategoriesChanged$ = this.todoCategoriesSubject$.asObservable();
+
+  groupedTodos: any;
+  private groupedTodosSubject$ = new BehaviorSubject<any>(this.groupedTodos);
+  groupedTodosChanged$ = this.groupedTodosSubject$.asObservable();
 
   constructor(
     public storageService: StorageService,
@@ -37,14 +41,13 @@ export class TodoService {
       this.todos = todos;
       this.todosSubject$.next(this.todos);
       this.getGroupedTodos();
-      // console.log(this.todos);
     });
   }
 
   getTodoCategories() {
     this.storageService.getCategories().then(categories => {
       this.todoCategories = categories;
-      // console.log(this.todoCategories);
+      this.todoCategoriesSubject$.next(this.todoCategories);
     });
   }
 
@@ -58,30 +61,31 @@ export class TodoService {
   }
 
   getGroupedTodos() {
-    this.storageService.getTodos().then(todos => {
-      this.groupedTodos = _.chain(todos)
-        .filter(['isCompleted', false])
-        .groupBy(x => x.categoryId)
-        .map((value, key) => ({ categoryId: key, todos: value }))
-        .value();
-      // console.log(this.groupedTodos);
-    });
-  }
+    this.groupedTodos = _.chain(this.todos)
+      .filter(['isCompleted', false])
+      .groupBy(x => x.categoryId)
+      .map((value, key) => ({ categoryId: key, todos: value }))
+      .value();
+    this.groupedTodosSubject$.next(this.groupedTodos);
+  };
 
   updateTodo(todo: Todo) {
-    this.storageService.updateTodo(todo).then(() => {
-      this.getTodos();
+    this.storageService.updateTodo(todo).then(todos => {
+      this.todos = todos;
+      this.todosSubject$.next(this.todos);
+      this.getGroupedTodos();
     });
   }
 
   deleteTodo(id: string) {
-    this.storageService.deleteTodo(id).then(() => {
-      this.getTodos();
+    this.storageService.deleteTodo(id).then(todos => {
+      this.todos = todos;
+      this.todosSubject$.next(this.todos);
+      this.getGroupedTodos();
     });
   }
 
   deleteCategory(id: string) {
-    // console.log('deleting id: ', id);
     let parentThis = this;
     this.storageService.deleteCategory(id).then(() => {
       this.unassignTodosWithDeletedCategory(parentThis, id);
@@ -93,7 +97,6 @@ export class TodoService {
   unassignTodosWithDeletedCategory(parentThis: any, id: string) {
     this.todos.forEach(function (todo) {
       if (todo.categoryId === id) {
-        // console.log('found one', todo);
         let newTodo: Todo = {
           completedAt: todo.completedAt,
           createdAt: todo.createdAt,
@@ -109,41 +112,12 @@ export class TodoService {
   }
 
   createTodo(newTodo: Todo): Observable<Todo[]> {
-    this.storageService.createTodo(newTodo).then((updatedTodos) => {
+    this.storageService.createTodo(newTodo).then(updatedTodos => {
       this.todos = updatedTodos;
       this.todosSubject$.next(this.todos);
-      this.getTodos();
+      this.getGroupedTodos();
     });
     return of(this.todos);
-  }
-
-  async presentCreateTodoPrompt() {
-    const alert = await this.alertController.create({
-      header: "Whaddua gotta get done?",
-      inputs: [
-        {
-          type: "text",
-          name: "title"
-        }
-      ],
-      buttons: [
-        {
-          text: "Cancel"
-        },
-        {
-          text: "Save",
-          handler: data => {
-            let newTodo = this.instantiateTodo(data.title);
-            this.storageService.createTodo(newTodo).then(() => {
-              this.getTodos();
-            });
-          }
-        }
-      ]
-    });
-    await alert.present().then(() => {
-      this.getTodos();
-    });
   }
 
   instantiateTodo(title: string): Todo {

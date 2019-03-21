@@ -6,6 +6,8 @@ import { TodoCategory } from '../../interfaces/todo-category.interface';
 import { TodoCategoryCreatePage } from "../../pages/todo-category-create/todo-category-create.page";
 
 import { TodoService } from '../../services/todo.service';
+import { Subscription } from "rxjs";
+
 
 @Component({
   selector: 'app-settings',
@@ -14,6 +16,8 @@ import { TodoService } from '../../services/todo.service';
 })
 export class SettingsPage implements OnInit {
   public newTodoCategory: TodoCategory;
+  todoCategories: TodoCategory[];
+  todoCategoriesChangedSub: Subscription;
 
   constructor(private router: Router,
     public modalController: ModalController,
@@ -22,7 +26,14 @@ export class SettingsPage implements OnInit {
 
   ngOnInit() {
     this.todoService.getTodoCategories();
+    this.todoCategoriesChangedSub = this.todoService.todoCategoriesChanged$.subscribe(todoCategories => this.todoCategories = todoCategories);
     this.initializeNewTodoCategory();
+  }
+
+  ngOnDestroy(): void {
+    if (this.todoCategoriesChangedSub) {
+      this.todoCategoriesChangedSub.unsubscribe();
+    }
   }
 
   initializeNewTodoCategory() {

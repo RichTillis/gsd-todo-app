@@ -11,7 +11,7 @@
 <ion-content padding>
 
   <ion-list lines="none">
-    <ion-item *ngFor="let category of (todoService.todoCategories)" (click)="presentTodoCategoryCreateModal(category)">
+    <ion-item *ngFor="let category of (todoCategories)" (click)="presentTodoCategoryCreateModal(category)">
       <ion-icon slot="start" src="/assets/logo-ionitron.svg" [ngStyle]="setIconColor(category.colorCode)"></ion-icon>
       <ion-icon class="trash" slot="end" src="/assets/md-close.svg" (click)="deleteCategory(category, $event)"></ion-icon>
       <ion-label>

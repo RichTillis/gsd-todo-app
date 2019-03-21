@@ -18,18 +18,6 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list lines="none" *ngIf="!grouped">
-    <ion-item *ngFor="let todo of (todoService.todos | callback: filterTodo)" (click)="routeToEdit(todo.id)">
-      <ion-icon slot="start" src="/assets/md-radio-button-off.svg" (click)="toggleCompleted(todo, $event)"></ion-icon>
-      <ion-label>
-        <ion-text>{{ todo.title }}</ion-text>
-        <p>
-          <ion-icon src="/assets/md-square.svg" class="group-icon-all" [ngStyle]="setIconColor(todo.categoryColorCode)"
-            *ngIf="!isEmpty(todo.categoryId)"></ion-icon>{{todo.categoryName}}
-        </p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
 
   <ion-list lines="none" *ngIf="!grouped">
     <ion-item *ngFor="let todo of (todos | callback: filterTodo)" (click)="routeToEdit(todo.id)">
@@ -45,7 +33,7 @@
   </ion-list>
 
   <ion-list lines="full" *ngIf="grouped">
-    <ion-item-group *ngFor="let group of (todoService.groupedTodos)">
+    <ion-item-group *ngFor="let group of (groupedTodos)">
       <ion-item class="group-header ">
         <ion-icon src="/assets/md-water.svg" class="group-icon-grouped" [ngStyle]="getColorCode(group.categoryId)" *ngIf="!isEmpty(group.categoryId)"></ion-icon>
         <ion-label *ngIf="isEmpty(group.categoryId)">No Category</ion-label>
