@@ -46,12 +46,27 @@ export class TodoPage implements OnInit {
   }
 
   filterTodo(todo: Todo) {
-    return !todo.isCompleted;
+    return !todo.isCompleted && !todo.isPriority;
+  }
+
+  filterPriorityTodo(todo: Todo) {
+    return !todo.isCompleted && todo.isPriority;
   }
 
   toggleCompleted(todo: Todo, ev: any) {
     ev.stopPropagation();
     todo.isCompleted = !todo.isCompleted;
+    this.todoService.updateTodo(todo);
+  }
+
+  togglePriority(todo: Todo, ev: any) {
+    ev.stopPropagation();
+    if (todo.isPriority === undefined) {
+      todo.isPriority = true;
+    }
+    else {
+      todo.isPriority = !todo.isPriority;
+    }
     this.todoService.updateTodo(todo);
   }
 

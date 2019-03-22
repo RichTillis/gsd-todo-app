@@ -1,5 +1,3 @@
-import { TodoCategory } from "./todo-category.interface";
-
 export interface Todo {
   id: string;
   title: string;
@@ -11,4 +9,5 @@ export interface Todo {
   categoryName?: string;
   categoryColorName?: string;
   categoryColorCode?: string;
+  isPriority?: boolean;
 }
