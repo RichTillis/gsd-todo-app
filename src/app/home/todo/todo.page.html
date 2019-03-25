@@ -35,23 +35,20 @@
   </ion-list>
 
   <ion-list lines="full" *ngIf="grouped">
-    <!-- <ion-item-group> -->
-      <ion-item class="group-header ">
-        <ion-icon src="/assets/md-water.svg" class="group-icon-grouped gold-star" ></ion-icon>
-        <ion-label>Priority</ion-label>
-      </ion-item>
-      <ion-item *ngFor="let todo of (todos | callback: filterPriorityTodo)" (click)="routeToEdit(todo.id)" class="group-item">
-        <ion-icon slot="start" src="/assets/md-square-outline.svg" (click)="toggleCompleted(todo, $event)"></ion-icon>
-        <ion-icon slot="end" class="gold-star" src="/assets/md-star.svg" (click)="togglePriority(todo, $event)" *ngIf="todo.isPriority"></ion-icon>
-        <ion-label>
-          <ion-text>{{ todo.title }}</ion-text>
-        </ion-label>
-      </ion-item>
-    <!-- </ion-item-group> -->
+    <ion-item class="group-header " *ngIf="hasPriorityTodos()">
+      <ion-icon src="/assets/md-water.svg" class="group-icon-grouped gold-star"></ion-icon>
+      <ion-label>Priority</ion-label>
+    </ion-item>
+    <ion-item *ngFor="let todo of (todos | callback: filterPriorityTodo)" (click)="routeToEdit(todo.id)" class="group-item">
+      <ion-icon slot="start" src="/assets/md-square-outline.svg" (click)="toggleCompleted(todo, $event)"></ion-icon>
+      <ion-icon slot="end" class="gold-star" src="/assets/md-star.svg" (click)="togglePriority(todo, $event)" *ngIf="todo.isPriority"></ion-icon>
+      <ion-label>
+        <ion-text>{{ todo.title }}</ion-text>
+      </ion-label>
+    </ion-item>
     <ion-item-group *ngFor="let group of (groupedTodos)">
       <ion-item class="group-header ">
-        <ion-icon src="/assets/md-water.svg" class="group-icon-grouped" [ngStyle]="getColorCode(group.categoryId)"
-          *ngIf="!isEmpty(group.categoryId)"></ion-icon>
+        <ion-icon src="/assets/md-water.svg" class="group-icon-grouped" [ngStyle]="getColorCode(group.categoryId)" *ngIf="!isEmpty(group.categoryId)"></ion-icon>
         <ion-label *ngIf="isEmpty(group.categoryId)">No Category</ion-label>
         <ion-label *ngIf="!isEmpty(group.categoryId)">{{ getCategoryName(group.categoryId) }}</ion-label>
       </ion-item>

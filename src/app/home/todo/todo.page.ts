@@ -53,6 +53,12 @@ export class TodoPage implements OnInit {
     return !todo.isCompleted && todo.isPriority;
   }
 
+  hasPriorityTodos(){
+    let priorityTodos = this.todos.filter(todo =>(todo.isPriority === true));
+    console.log(priorityTodos);
+    return priorityTodos.length > 0;
+  }
+
   toggleCompleted(todo: Todo, ev: any) {
     ev.stopPropagation();
     todo.isCompleted = !todo.isCompleted;
