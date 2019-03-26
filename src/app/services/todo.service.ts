@@ -71,7 +71,7 @@ export class TodoService {
   }
 
   getGroupedTodos() {
-    let todos = _.filter(this.todos, function(todo){
+    let todos = _.filter(this.todos, function (todo) {
       return !todo.isCompleted && !todo.isPriority;
     })
     this.groupedTodos = _.chain(todos)
@@ -91,7 +91,7 @@ export class TodoService {
 
   getPriorityTodos() {
 
-    this.priorityTodos = _.filter(this.todos, function (todo){
+    this.priorityTodos = _.filter(this.todos, function (todo) {
       return !todo.isCompleted && todo.isPriority;
     })
 
@@ -160,11 +160,20 @@ export class TodoService {
       this.todosSubject$.next(this.todos);
       this.getGroupedTodos();
       this.getPriorityTodos();
+      this.getCompletedTodos();
     });
     return of(this.todos);
   }
 
-  //is this used any more???
+  createQuickWinTodo(newQuickWinData: any) {
+    let newDate = new Date().getTime().toString();
+    let newTodo: Todo = this.instantiateTodo(newQuickWinData.title);
+    newTodo.details = newQuickWinData.details;
+    newTodo.isCompleted = true;
+    newTodo.completedAt = newDate;
+    this.createTodo(newTodo);
+  }
+
   instantiateTodo(title: string): Todo {
     let newDate = new Date().getTime().toString();
     return {
@@ -172,6 +181,7 @@ export class TodoService {
       title: title,
       details: "",
       isCompleted: false,
+      isPriority: false,
       createdAt: newDate,
       completedAt: ""
     };
