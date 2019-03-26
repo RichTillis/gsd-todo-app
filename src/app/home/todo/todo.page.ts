@@ -20,11 +20,15 @@ export class TodoPage implements OnInit {
   todos: Todo[];
   todosChangedSub: Subscription;
 
+  priorityTodos: Todo[] = [];
+  priorityTodosChangedSub: Subscription
+
   constructor(
     public todoService: TodoService,
     private router: Router,
     private modalController: ModalController
-  ) { }
+  ) { 
+  }
 
   ngOnInit() {
     this.todoService.getTodos();
@@ -34,6 +38,7 @@ export class TodoPage implements OnInit {
     this.grouped = true;
     this.todosChangedSub = this.todoService.todosChanged$.subscribe(todos => this.todos = todos);
     this.groupedTodosChangedSub = this.todoService.groupedTodosChanged$.subscribe(groupedTodos => this.groupedTodos = groupedTodos);
+    this.priorityTodosChangedSub = this.todoService.priorityTodosChanged$.subscribe(priorityTodos => this.priorityTodos = priorityTodos);
   }
 
   ngOnDestroy(): void {
@@ -43,15 +48,33 @@ export class TodoPage implements OnInit {
     if (this.groupedTodosChangedSub) {
       this.groupedTodosChangedSub.unsubscribe();
     }
+    if (this.priorityTodosChangedSub) {
+      this.priorityTodosChangedSub.unsubscribe();
+    }
   }
 
   filterTodo(todo: Todo) {
-    return !todo.isCompleted;
+    return !todo.isCompleted && !todo.isPriority;
+  }
+
+  filterPriorityTodo(todo: Todo) {
+    return !todo.isCompleted && todo.isPriority;
   }
 
   toggleCompleted(todo: Todo, ev: any) {
     ev.stopPropagation();
     todo.isCompleted = !todo.isCompleted;
+    this.todoService.updateTodo(todo);
+  }
+
+  togglePriority(todo: Todo, ev: any) {
+    ev.stopPropagation();
+    if (todo.isPriority === undefined) {
+      todo.isPriority = true;
+    }
+    else {
+      todo.isPriority = !todo.isPriority;
+    }
     this.todoService.updateTodo(todo);
   }
 
@@ -108,7 +131,6 @@ export class TodoPage implements OnInit {
       return returnVal.name;
     }
     return null
-
   }
 
 }

@@ -27,6 +27,14 @@ export class TodoService {
   private groupedTodosSubject$ = new BehaviorSubject<any>(this.groupedTodos);
   groupedTodosChanged$ = this.groupedTodosSubject$.asObservable();
 
+  priorityTodos: Todo[];
+  private priorityTodosSubject$ = new BehaviorSubject<Todo[]>(this.priorityTodos);
+  priorityTodosChanged$ = this.priorityTodosSubject$.asObservable();
+
+  completedTodos: Todo[];
+  private completedTodosSubject$ = new BehaviorSubject<Todo[]>(this.completedTodos);
+  completedTodosChanged$ = this.completedTodosSubject$.asObservable();
+
   constructor(
     public storageService: StorageService,
     public alertController: AlertController
@@ -41,6 +49,8 @@ export class TodoService {
       this.todos = todos;
       this.todosSubject$.next(this.todos);
       this.getGroupedTodos();
+      this.getPriorityTodos();
+      this.getCompletedTodos();
     });
   }
 
@@ -61,12 +71,41 @@ export class TodoService {
   }
 
   getGroupedTodos() {
-    this.groupedTodos = _.chain(this.todos)
-      .filter(['isCompleted', false])
+    let todos = _.filter(this.todos, function(todo){
+      return !todo.isCompleted && !todo.isPriority;
+    })
+    this.groupedTodos = _.chain(todos)
+      // .filter(['isCompleted', false])
       .groupBy(x => x.categoryId)
       .map((value, key) => ({ categoryId: key, todos: value }))
       .value();
     this.groupedTodosSubject$.next(this.groupedTodos);
+
+    // this.groupedTodos = _.chain(this.todos)
+    //   .filter(['isCompleted', false])
+    //   .groupBy(x => x.categoryId)
+    //   .map((value, key) => ({ categoryId: key, todos: value }))
+    //   .value();
+    // this.groupedTodosSubject$.next(this.groupedTodos);
+  };
+
+  getPriorityTodos() {
+
+    this.priorityTodos = _.filter(this.todos, function (todo){
+      return !todo.isCompleted && todo.isPriority;
+    })
+
+    // this.priorityTodos = _.chain(this.todos)
+    //   .filter(['isPriority', true])
+    //   .value();
+    this.priorityTodosSubject$.next(this.priorityTodos);
+  };
+
+  getCompletedTodos() {
+    this.completedTodos = _.chain(this.todos)
+      .filter(['isCompleted', true])
+      .value();
+    this.completedTodosSubject$.next(this.completedTodos);
   };
 
   updateTodo(todo: Todo) {
@@ -74,6 +113,8 @@ export class TodoService {
       this.todos = todos;
       this.todosSubject$.next(this.todos);
       this.getGroupedTodos();
+      this.getPriorityTodos();
+      this.getCompletedTodos();
     });
   }
 
@@ -82,6 +123,8 @@ export class TodoService {
       this.todos = todos;
       this.todosSubject$.next(this.todos);
       this.getGroupedTodos();
+      this.getPriorityTodos();
+      this.getCompletedTodos();
     });
   }
 
@@ -116,10 +159,12 @@ export class TodoService {
       this.todos = updatedTodos;
       this.todosSubject$.next(this.todos);
       this.getGroupedTodos();
+      this.getPriorityTodos();
     });
     return of(this.todos);
   }
 
+  //is this used any more???
   instantiateTodo(title: string): Todo {
     let newDate = new Date().getTime().toString();
     return {

@@ -47,7 +47,7 @@ export class StorageService {
     let thirdCat: TodoCategory = {
       id: '3',
       name: 'Today',
-      colorCode: '#811a74'
+      colorCode: '#145c9e'
     }
     this.storage.set(CAT_KEY, [firstCat, secondCat, thirdCat]);
   }
