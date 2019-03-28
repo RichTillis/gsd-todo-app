@@ -6,6 +6,7 @@ import { AlertController } from "@ionic/angular";
 // import { groupBy } from 'lodash';
 
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 import { StorageService } from "../services/storage.service";
 import { TodoCategory } from "../interfaces/todo-category.interface";
@@ -35,10 +36,14 @@ export class TodoService {
   private completedTodosSubject$ = new BehaviorSubject<Todo[]>(this.completedTodos);
   completedTodosChanged$ = this.completedTodosSubject$.asObservable();
 
+  groupedCompletedTodos: any;
+  private groupedCompletedTodosSubject$ = new BehaviorSubject<Todo[]>(this.groupedCompletedTodos);
+  groupedCompletedTodosChanged$ = this.groupedCompletedTodosSubject$.asObservable();
+
   constructor(
     public storageService: StorageService,
     public alertController: AlertController
-  ) { }
+  ) {}
 
   getTodo(id: string): Promise<any> {
     return this.storageService.getTodo(id);
@@ -88,6 +93,17 @@ export class TodoService {
     //   .value();
     // this.groupedTodosSubject$.next(this.groupedTodos);
   };
+
+  getGroupedCompletedTodos(){
+    let todos = _.filter(this.todos, function (todo) {
+      return todo.isCompleted;
+    })
+    this.groupedCompletedTodos = _.chain(todos)
+      .groupBy(x => x.completedMonth)
+      .map((value, key) => ({ completedMonth: key, todos: value }))
+      .value();
+    this.groupedCompletedTodosSubject$.next(this.groupedCompletedTodos);
+  }
 
   getPriorityTodos() {
 
@@ -185,5 +201,21 @@ export class TodoService {
       createdAt: newDate,
       completedAt: ""
     };
+  }
+
+  toggleCompleted(todo:Todo){
+    if(todo.isCompleted){
+      todo.isCompleted = !todo.isCompleted;
+      todo.completedAt = '';
+      todo.completedMonth = '';
+    }
+    else{
+      let completedDate = new Date().getTime();  
+      
+      todo.isCompleted = !todo.isCompleted;
+      todo.completedAt = completedDate.toString();
+      todo.completedMonth = moment(completedDate).format('MMMM');
+    }
+    this.updateTodo(todo);
   }
 }

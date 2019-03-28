@@ -30,10 +30,12 @@
     "@ionic/angular": "4.1.2",
     "@ionic/storage": "^2.2.0",
     "@types/lodash.groupby": "^4.6.6",
+    "@types/moment": "^2.13.0",
     "cordova-sqlite-storage": "^3.2.0",
     "core-js": "^3.0.0",
     "firebase": "^5.9.1",
     "lodash.groupby": "^4.6.0",
+    "moment": "^2.24.0",
     "rxjs": "~6.4.0",
     "zone.js": "^0.8.29"
   },

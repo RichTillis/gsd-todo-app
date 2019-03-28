@@ -2,8 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { AlertController, ModalController } from "@ionic/angular";
 import { Router } from "@angular/router";
 
-// import { CreateTodoPage } from '../../pages/create-todo/create-todo.page';
-
 import { Todo } from "../../interfaces/todo.interface";
 import { TodoService } from "../../services/todo.service";
 import { Subscription } from "rxjs";
@@ -41,21 +39,12 @@ export class CompletedPage implements OnInit {
 
   toggleCompleted(todo: Todo, ev: any) {
     ev.stopPropagation();
-    todo.isCompleted = !todo.isCompleted;
-    this.todoService.updateTodo(todo);
+    this.todoService.toggleCompleted(todo);
   }
 
-  routeToEdit(id: number) {
+  routeToEdit(id: number) {//TODO: should be a string?
     this.router.navigateByUrl('/edit/' + id);
   }
-
-  // async presentCreateTodoModal() {
-  //   const modal = await this.modalController.create({
-  //     component: CreateTodoPage,
-  //     componentProps: {}
-  //   });
-  //   return await modal.present();
-  // }
 
   async presentCreateCompletedTodoAlert() {
     const alert = await this.alertController.create({
