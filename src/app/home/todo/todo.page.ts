@@ -27,8 +27,7 @@ export class TodoPage implements OnInit {
     public todoService: TodoService,
     private router: Router,
     private modalController: ModalController
-  ) { 
-  }
+  ) {   }
 
   ngOnInit() {
     this.todoService.getTodos();
@@ -63,8 +62,7 @@ export class TodoPage implements OnInit {
 
   toggleCompleted(todo: Todo, ev: any) {
     ev.stopPropagation();
-    todo.isCompleted = !todo.isCompleted;
-    this.todoService.updateTodo(todo);
+    this.todoService.toggleCompleted(todo);
   }
 
   togglePriority(todo: Todo, ev: any) {

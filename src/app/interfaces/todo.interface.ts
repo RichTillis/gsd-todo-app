@@ -5,6 +5,7 @@ export interface Todo {
   isCompleted: boolean;
   createdAt: string;
   completedAt: string;
+  completedMonth?: string;
   categoryId?: string;
   categoryName?: string;
   categoryColorName?: string;

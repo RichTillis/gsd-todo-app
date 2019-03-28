@@ -40,7 +40,6 @@ export class EditTodoPage implements OnInit {
       this.todoService.getTodo(id).then(todo => {
         this.todo = todo;
         this.selectedCategory = this.todoService.getTodoCategory(this.todo.categoryId);
-        console.log(this.selectedCategory)
       });
     }
   }
