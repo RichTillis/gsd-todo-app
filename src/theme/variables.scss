@@ -13,7 +13,6 @@ ion-title {
 
 /** Ionic CSS Variables **/
 :root {
-
   /** primary **/
   --ion-color-primary: #4e4e4e;
   --ion-color-primary-rgb: 78, 78, 78;
@@ -31,12 +30,12 @@ ion-title {
   --ion-color-secondary-tint: #a4a4a4;
 
   /** tertiary color **/
-  --ion-color-tertiary: #145c9e;
-  --ion-color-tertiary-rgb: 20, 92, 158;
+  --ion-color-tertiary: #811a74;
+  --ion-color-tertiary-rgb: 129, 26, 116;
   --ion-color-tertiary-contrast: #ffffff;
   --ion-color-tertiary-contrast-rgb: 255, 255, 255;
-  --ion-color-tertiary-shade: #12518b;
-  --ion-color-tertiary-tint: #2c6ca8;
+  --ion-color-tertiary-shade: #721766;
+  --ion-color-tertiary-tint: #8e3182;
 
   /** success **/
   --ion-color-success: #10dc60;
@@ -87,6 +86,4 @@ ion-title {
   --ion-color-light-tint: #f5f6f9;
 
   --ion-tab-bar-color-activated: var(--ion-color-tertiary);
-
-
 }
