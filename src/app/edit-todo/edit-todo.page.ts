@@ -22,13 +22,16 @@ export class EditTodoPage implements OnInit {
     public todoService: TodoService
   ) {
     todoService.getTodoCategories();
-    let newDate = new Date().getTime().toString();
+
+    //TODO - is this really needed anymore???
+    let newDate = new Date().getTime() / 1000
+    newDate = Math.floor(newDate);
     this.todo = {
-      id: newDate,
+      id: newDate.toString(),
       title: "",
       details: "",
       isCompleted: false,
-      createdAt: newDate,
+      createdAt: newDate.toString(),
       completedAt: ""
     };
   }

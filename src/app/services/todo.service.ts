@@ -43,7 +43,7 @@ export class TodoService {
   constructor(
     public storageService: StorageService,
     public alertController: AlertController
-  ) {}
+  ) { }
 
   getTodo(id: string): Promise<any> {
     return this.storageService.getTodo(id);
@@ -55,7 +55,7 @@ export class TodoService {
       this.todosSubject$.next(this.todos);
       this.getGroupedTodos();
       this.getPriorityTodos();
-      this.getCompletedTodos();
+      this.getGroupedCompletedTodos();
     });
   }
 
@@ -80,40 +80,46 @@ export class TodoService {
       return !todo.isCompleted && !todo.isPriority;
     })
     this.groupedTodos = _.chain(todos)
-      // .filter(['isCompleted', false])
       .groupBy(x => x.categoryId)
       .map((value, key) => ({ categoryId: key, todos: value }))
       .value();
     this.groupedTodosSubject$.next(this.groupedTodos);
-
-    // this.groupedTodos = _.chain(this.todos)
-    //   .filter(['isCompleted', false])
-    //   .groupBy(x => x.categoryId)
-    //   .map((value, key) => ({ categoryId: key, todos: value }))
-    //   .value();
-    // this.groupedTodosSubject$.next(this.groupedTodos);
   };
 
-  getGroupedCompletedTodos(){
+  getGroupedCompletedTodos() {
     let todos = _.filter(this.todos, function (todo) {
       return todo.isCompleted;
-    })
+    });
+    this.todos = this.todos.map((todo: Todo) => {
+      todo.completedMonth = moment.unix(parseInt(todo.completedAt)).utc().format('MMMM');
+      return todo;
+    });
+    console.log(this.todos);
+
     this.groupedCompletedTodos = _.chain(todos)
       .groupBy(x => x.completedMonth)
       .map((value, key) => ({ completedMonth: key, todos: value }))
       .value();
+      console.log(this.groupedCompletedTodos);
     this.groupedCompletedTodosSubject$.next(this.groupedCompletedTodos);
   }
 
-  getPriorityTodos() {
+  // testCompleted() {
+  //   this.groupedCompletedTodos = _.filter(this.todos, function (todo) {
+  //     return todo.isCompleted;
+  //   });
+  //   this.groupedCompletedTodos = this.groupedCompletedTodos.map((completedTodo: Todo) => {
+  //     completedTodo.completedAt = moment(completedTodo.completedAt).format('MMMM')
+  //     return completedTodo;
+  //   });
+  //   console.log(this.groupedCompletedTodos);
+  // }
 
+  getPriorityTodos() {
+    //TODO - regular javascript filter not lodash???
     this.priorityTodos = _.filter(this.todos, function (todo) {
       return !todo.isCompleted && todo.isPriority;
     })
-
-    // this.priorityTodos = _.chain(this.todos)
-    //   .filter(['isPriority', true])
-    //   .value();
     this.priorityTodosSubject$.next(this.priorityTodos);
   };
 
@@ -182,7 +188,9 @@ export class TodoService {
   }
 
   createQuickWinTodo(newQuickWinData: any) {
-    let newDate = new Date().getTime().toString();
+    let date = new Date().getTime() / 1000;
+    date = Math.floor(date);
+    let newDate = date.toString();
     let newTodo: Todo = this.instantiateTodo(newQuickWinData.title);
     newTodo.details = newQuickWinData.details;
     newTodo.isCompleted = true;
@@ -191,7 +199,9 @@ export class TodoService {
   }
 
   instantiateTodo(title: string): Todo {
-    let newDate = new Date().getTime().toString();
+    let date = new Date().getTime() / 1000;
+    date = Math.floor(date);
+    let newDate = date.toString();
     return {
       id: newDate,
       title: title,
@@ -203,18 +213,20 @@ export class TodoService {
     };
   }
 
-  toggleCompleted(todo:Todo){
-    if(todo.isCompleted){
+  toggleCompleted(todo: Todo) {
+    if (todo.isCompleted) {
       todo.isCompleted = !todo.isCompleted;
       todo.completedAt = '';
       todo.completedMonth = '';
     }
-    else{
-      let completedDate = new Date().getTime();  
-      
+    else {
+      let completedDate = new Date().getTime() / 1000;
+      completedDate = Math.floor(completedDate);
+      console.log(completedDate);
+
+      // let completedDate = new Date();
       todo.isCompleted = !todo.isCompleted;
       todo.completedAt = completedDate.toString();
-      todo.completedMonth = moment(completedDate).format('MMMM');
     }
     this.updateTodo(todo);
   }

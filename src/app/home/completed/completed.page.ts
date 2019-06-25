@@ -14,22 +14,28 @@ import { Subscription } from "rxjs";
 export class CompletedPage implements OnInit {
   todos: Todo[];
   todosChangedSub: Subscription;
+  completedTodosGrouped: Todo[];
+  completedTodosGroupedSub: Subscription;
+  grouped: boolean;
 
   constructor(
     public alertController: AlertController,
     public todoService: TodoService,
     private router: Router,
-    private modalController: ModalController
   ) { }
 
   ngOnInit() {
+    this.grouped = true;
+
     this.todoService.getTodos();
     this.todosChangedSub = this.todoService.todosChanged$.subscribe(todos => this.todos = todos);
+    this.completedTodosGroupedSub = this.todoService.groupedCompletedTodosChanged$.subscribe(completedTodos => this.completedTodosGrouped = completedTodos);
   }
 
   ngOnDestroy(): void {
     if (this.todosChangedSub) {
       this.todosChangedSub.unsubscribe();
+      this.completedTodosGroupedSub.unsubscribe();
     }
   }
 
@@ -44,6 +50,10 @@ export class CompletedPage implements OnInit {
 
   routeToEdit(id: number) {//TODO: should be a string?
     this.router.navigateByUrl('/edit/' + id);
+  }
+
+  segmentChanged(ev: any) {
+    this.grouped = ev.detail.value === 'all' ? false : true;
   }
 
   async presentCreateCompletedTodoAlert() {
