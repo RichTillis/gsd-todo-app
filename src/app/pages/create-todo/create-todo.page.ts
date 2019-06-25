@@ -15,30 +15,32 @@ export class CreateTodoPage implements OnInit {
   public todo: Todo;
   public selectedCategory: TodoCategory;
 
-  constructor(private router: Router,private modalController:ModalController,
+  constructor(private router: Router, private modalController: ModalController,
     private toastController: ToastController,
     public todoService: TodoService) { }
 
   ngOnInit() {
     this.todoService.getTodoCategories();
-    let newDate = new Date().getTime().toString();
+    let newDate = new Date().getTime() / 1000;
+    newDate = Math.floor(newDate);
+    console.log(newDate);
     this.todo = {
-      id: newDate,
+      id: newDate.toString(),
       title: "",
       details: "",
       isCompleted: false,
-      createdAt: newDate,
+      createdAt: newDate.toString(),
       completedAt: ""
     };
   }
 
   saveTodo() {
-    if(this.selectedCategory){
+    if (this.selectedCategory) {
       this.todo.categoryId = this.selectedCategory.id;
       this.todo.categoryName = this.selectedCategory.name;
       this.todo.categoryColorCode = this.selectedCategory.colorCode;
     }
-    
+
     this.todoService.createTodo(this.todo);
     this.saveSuccessfulToast();
     this.closeModal();

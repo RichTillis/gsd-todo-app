@@ -22,3 +22,21 @@ ion-label {
 .trash{
   font-size: 32px;
 }
+
+.segment-height {
+  height: 2em;
+}
+
+.group-header {
+  --border-radius: 0px;
+  --min-height: 0;
+  --ion-item-background: var(--ion-color-light);
+  padding-bottom: 0em;
+  padding-top: 1em;
+  font-weight: bold;
+}
+
+.group-item {
+  --border-radius: 0px;
+  padding-bottom: 0em;
+}
