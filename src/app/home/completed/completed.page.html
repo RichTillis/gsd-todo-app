@@ -35,6 +35,7 @@
         class="group-item">
         <ion-icon slot="start" src="/assets/md-checkbox.svg" (click)="toggleCompleted(todo, $event)"
           color="tertiary"></ion-icon>
+          <ion-icon class="trash" slot="end" src="/assets/md-close.svg" (click)="deleteTodo(todo, $event)"></ion-icon>
         <ion-label>
           <ion-text>{{ todo.title }}</ion-text>
         </ion-label>

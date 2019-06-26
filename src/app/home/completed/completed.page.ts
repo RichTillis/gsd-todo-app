@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { AlertController, ModalController } from "@ionic/angular";
+import { AlertController} from "@ionic/angular";
 import { Router } from "@angular/router";
 
 import { Todo } from "../../interfaces/todo.interface";

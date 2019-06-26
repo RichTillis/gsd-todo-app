@@ -137,6 +137,7 @@ export class TodoService {
       this.getGroupedTodos();
       this.getPriorityTodos();
       this.getCompletedTodos();
+      this.getGroupedCompletedTodos();
     });
   }
 
@@ -147,6 +148,7 @@ export class TodoService {
       this.getGroupedTodos();
       this.getPriorityTodos();
       this.getCompletedTodos();
+      this.getGroupedCompletedTodos();
     });
   }
 
@@ -183,6 +185,7 @@ export class TodoService {
       this.getGroupedTodos();
       this.getPriorityTodos();
       this.getCompletedTodos();
+      this.getGroupedCompletedTodos();
     });
     return of(this.todos);
   }
