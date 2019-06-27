@@ -37,7 +37,6 @@ export class EditTodoPage implements OnInit {
   }
 
   ngOnInit() {
-    // console.log(this.route.snapshot);
     let id = this.route.snapshot.paramMap.get("id");
     if (id != null) {
       this.todoService.getTodo(id).then(todo => {
@@ -53,7 +52,6 @@ export class EditTodoPage implements OnInit {
       this.todo.categoryName = this.selectedCategory.name;
       this.todo.categoryColorCode = this.selectedCategory.colorCode;
     }
-    console.log(this.todo);
     //this should be a promise
     this.todoService.updateTodo(this.todo);
     //then the successful toast and redirect
