@@ -62,7 +62,7 @@ export class TodoService {
   getTodoCategories() {
     this.storageService.getCategories().then(categories => {
       this.todoCategories = categories;
-      this.todoCategoriesSubject$.next(this.todoCategories);
+      this.todoCategoriesSubject$.next(categories);
     });
   }
 
@@ -94,13 +94,11 @@ export class TodoService {
       todo.completedMonth = moment.unix(parseInt(todo.completedAt)).utc().format('MMMM');
       return todo;
     });
-    console.log(this.todos);
 
     this.groupedCompletedTodos = _.chain(todos)
       .groupBy(x => x.completedMonth)
       .map((value, key) => ({ completedMonth: key, todos: value }))
       .value();
-      console.log(this.groupedCompletedTodos);
     this.groupedCompletedTodosSubject$.next(this.groupedCompletedTodos);
   }
 
@@ -112,7 +110,6 @@ export class TodoService {
   //     completedTodo.completedAt = moment(completedTodo.completedAt).format('MMMM')
   //     return completedTodo;
   //   });
-  //   console.log(this.groupedCompletedTodos);
   // }
 
   getPriorityTodos() {
@@ -156,9 +153,9 @@ export class TodoService {
     let parentThis = this;
     this.storageService.deleteCategory(id).then(() => {
       this.unassignTodosWithDeletedCategory(parentThis, id);
+      this.getTodoCategories();
     });
     this.getTodos();
-    this.getTodoCategories();
   }
 
   unassignTodosWithDeletedCategory(parentThis: any, id: string) {
@@ -225,7 +222,6 @@ export class TodoService {
     else {
       let completedDate = new Date().getTime() / 1000;
       completedDate = Math.floor(completedDate);
-      console.log(completedDate);
 
       // let completedDate = new Date();
       todo.isCompleted = !todo.isCompleted;

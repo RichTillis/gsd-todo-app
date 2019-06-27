@@ -87,7 +87,7 @@ export class SettingsPage implements OnInit {
         {
           text: "Yes",
           handler: () => {
-            // console.log('delete me');
+            console.log('delete me');
             this.todoService.deleteCategory(category.id);
           }
         }

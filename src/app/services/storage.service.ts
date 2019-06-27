@@ -113,6 +113,7 @@ export class StorageService {
     if (!categories || categories.length === 0) {
       return null;
     }
+    //TODO maybe a map is a better structure for this operation??
     let toKeep: TodoCategory[] = [];
     for (let i of categories) {
       if (i.id !== id) {
@@ -123,9 +124,7 @@ export class StorageService {
   }
 
   getTodo(id: string): Promise<any> {
-    // console.log(id);
     return this.storage.get(TODO_KEY).then((todos: Todo[]) => {
-      // console.log(todos);
       if (!todos || todos.length === 0) {
         return null;
       }
@@ -136,7 +135,6 @@ export class StorageService {
           break;
         }
       }
-      // console.log(returnTodo)
       return returnTodo;
     });
   }
