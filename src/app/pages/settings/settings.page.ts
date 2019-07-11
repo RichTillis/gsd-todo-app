@@ -45,7 +45,7 @@ export class SettingsPage implements OnInit {
   }
 
   goBack() {
-    this.router.navigateByUrl('/home/todo');
+    this.router.navigateByUrl('/tabs/todo');
   }
 
   setIconColor(color: string) {

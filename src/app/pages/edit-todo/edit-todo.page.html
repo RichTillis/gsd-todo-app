@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-icon src="/assets/md-arrow-back.svg" class="back-arrow" (click)="goBack()"></ion-icon>
+      <!-- <ion-back-button defaultHref="/tabs/todo"></ion-back-button> -->
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-icon src="/assets/md-settings.svg" class="settings-icon" (click)="goToSettings()"></ion-icon>
+    </ion-buttons>
+    <ion-title>{{ todo.title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-label class="underline" position="stacked">Whaddua Got to Get Done</ion-label>
+    <ion-input type="text" [(ngModel)]="todo.title"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Category</ion-label>
+    <ion-select [(ngModel)]="selectedCategory" interface="popover">
+      <ion-select-option *ngFor="let category of todoService.todoCategories" [value]="category">{{category.name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label class="underline" position="stacked">Details</ion-label>
+    <ion-textarea type="text" [(ngModel)]="todo.details" rows="12"></ion-textarea>
+  </ion-item>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="saveTodo()" color="tertiary">
+      <ion-icon src="/assets/md-save.svg"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
