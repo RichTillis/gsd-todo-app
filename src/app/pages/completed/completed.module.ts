@@ -5,7 +5,7 @@ import { Routes, RouterModule } from "@angular/router";
 
 import { IonicModule } from "@ionic/angular";
 
-import { AppPipesModule } from "../../../pipes/pipes.module";
+import { AppPipesModule } from "../../pipes/pipes.module";
 
 
 import { CompletedPage } from "./completed.page";

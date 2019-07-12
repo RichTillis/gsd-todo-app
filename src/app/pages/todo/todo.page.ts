@@ -2,9 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 import { Router } from "@angular/router";
 
-import { TodoService } from "../../../services/todo.service";
-import { Todo } from "../../../interfaces/todo.interface";
-import { CreateTodoPage } from '../../create-todo/create-todo.page';
+import { TodoService } from "../../services/todo.service";
+import { Todo } from "../../interfaces/todo.interface";
+import { CreateTodoPage } from '../create-todo/create-todo.page';
 import { Subscription } from "rxjs";
 
 @Component({

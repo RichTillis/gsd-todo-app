@@ -13,11 +13,11 @@ const routes: Routes = [
     children: [
       {
         path: "active",
-        loadChildren: "./todo/todo.module#TodoPageModule"
+        loadChildren: "../todo/todo.module#TodoPageModule"
       },
       {
         path: "completed",
-        loadChildren: "./completed/completed.module#CompletedPageModule"
+        loadChildren: "../completed/completed.module#CompletedPageModule"
       }
     ]
   },

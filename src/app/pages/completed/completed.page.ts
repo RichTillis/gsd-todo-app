@@ -2,8 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { AlertController} from "@ionic/angular";
 import { Router } from "@angular/router";
 
-import { Todo } from "../../../interfaces/todo.interface";
-import { TodoService } from "../../../services/todo.service";
+import { Todo } from "../../interfaces/todo.interface";
+import { TodoService } from "../../services/todo.service";
 import { Subscription } from "rxjs";
 
 @Component({
@@ -119,9 +119,5 @@ export class CompletedPage implements OnInit {
     });
 
     await alert.present();
-  }
-
-  goToSettings() {
-    this.router.navigateByUrl('/settings');
   }
 }
