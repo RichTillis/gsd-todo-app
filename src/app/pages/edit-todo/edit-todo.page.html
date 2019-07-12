@@ -1,11 +1,10 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-icon src="/assets/md-arrow-back.svg" class="back-arrow" (click)="goBack()"></ion-icon>
-      <!-- <ion-back-button defaultHref="/tabs/todo"></ion-back-button> -->
+      <ion-back-button defaultHref="/home/tabs/todo"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-icon src="/assets/md-settings.svg" class="settings-icon" (click)="goToSettings()"></ion-icon>
+        <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>{{ todo.title }}</ion-title>
   </ion-toolbar>
@@ -31,7 +30,7 @@
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="saveTodo()" color="tertiary">
-      <ion-icon src="/assets/md-save.svg"></ion-icon>
+      <ion-icon name="save"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>

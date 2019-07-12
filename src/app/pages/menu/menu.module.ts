@@ -12,19 +12,23 @@ const routes: Routes = [
     path: '',
     component: MenuPage,
     children: [
+      // {
+      //   path: 'first',
+      //   loadChildren: '../first-with-tabs/first-with-tabs.module#FirstWithTabsPageModule'
+      // },
+      // {
+      //   path: 'second',
+      //   loadChildren: '../second/second.module#SecondPageModule'
+      // },
       {
-        path: 'first',
-        loadChildren: '../first-with-tabs/first-with-tabs.module#FirstWithTabsPageModule'
+        path: 'home',
+        loadChildren: '../home/home.module#HomePageModule'
       },
       {
-        path: 'second',
-        loadChildren: '../second/second.module#SecondPageModule'
+        path: 'categories',
+        loadChildren: '../categories/categories.module#CategoriesPageModule'
       },
-      {
-        path:'second/details',
-        loadChildren:'../details/details.module#DetailsPageModule'
-      }
-      
+
     ]
   }
 ];
@@ -38,4 +42,4 @@ const routes: Routes = [
   ],
   declarations: [MenuPage]
 })
-export class MenuPageModule {}
+export class MenuPageModule { }

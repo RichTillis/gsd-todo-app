@@ -2,22 +2,38 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { IonicModule } from "@ionic/angular";
 import { FormsModule } from "@angular/forms";
+import { Routes, RouterModule } from '@angular/router';
 
 import { TabsPage } from "./tabs.page";
 
-import { TabsPageRoutingModule } from "./tabs.routing.module";
-import { TodoPageModule } from "./todo/todo.module";
-import { CompletedPageModule } from "./completed/completed.module";
-
+const routes: Routes = [
+  {
+    path: "tabs",
+    component: TabsPage,
+    children: [
+      {
+        path: "active",
+        loadChildren: "./todo/todo.module#TodoPageModule"
+      },
+      {
+        path: "completed",
+        loadChildren: "./completed/completed.module#CompletedPageModule"
+      }
+    ]
+  },
+  {
+    path: "",
+    redirectTo: "/tabs/todo",
+    pathMatch: "full"
+  }
+];
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TabsPageRoutingModule,
-    TodoPageModule,
-    CompletedPageModule
+    RouterModule.forChild(routes)
   ],
   declarations: [TabsPage]
 })

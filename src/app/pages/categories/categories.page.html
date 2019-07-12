@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/menu/tabs/todo"></ion-back-button>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Categories</ion-title>
   </ion-toolbar>
@@ -12,7 +12,7 @@
   <ion-list lines="none">
     <ion-item *ngFor="let category of (todoCategories)" (click)="presentTodoCategoryCreateModal(category)">
       <ion-icon slot="start" name="logo-ionitron" [ngStyle]="setIconColor(category.colorCode)"></ion-icon>
-      <ion-icon class="trash" slot="end" name="close" (click)="deleteCategory(category, $event)"></ion-icon>
+      <ion-icon slot="end" name="close" class="trash" (click)="deleteCategory(category, $event)"></ion-icon>
       <ion-label>
         {{ category.name }}
       </ion-label>

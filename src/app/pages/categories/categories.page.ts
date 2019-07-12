@@ -8,13 +8,13 @@ import { TodoCategoryCreatePage } from "../../pages/todo-category-create/todo-ca
 import { TodoService } from '../../services/todo.service';
 import { Subscription } from "rxjs";
 
-
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.page.html',
-  styleUrls: ['./settings.page.scss'],
+  selector: 'app-categories',
+  templateUrl: './categories.page.html',
+  styleUrls: ['./categories.page.scss'],
 })
-export class SettingsPage implements OnInit {
+export class CategoriesPage implements OnInit {
+
   public newTodoCategory: TodoCategory;
   todoCategories: TodoCategory[];
   todoCategoriesChangedSub: Subscription;
