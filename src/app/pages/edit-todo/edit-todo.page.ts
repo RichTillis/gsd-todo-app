@@ -2,8 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { ToastController } from "@ionic/angular";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { Todo } from "../interfaces/todo.interface";
-import { TodoService } from "../services/todo.service";
+import { Todo } from "../../interfaces/todo.interface";
+import { TodoService } from "../../services/todo.service";
 import { TodoCategory } from "src/app/interfaces/todo-category.interface";
 
 @Component({
@@ -56,15 +56,7 @@ export class EditTodoPage implements OnInit {
     this.todoService.updateTodo(this.todo);
     //then the successful toast and redirect
     this.saveSuccessfulToast();
-    this.router.navigateByUrl('/home/todo');
-  }
-
-  goBack() {
-    this.router.navigateByUrl('/home/todo');
-  }
-
-  goToSettings() {
-    this.router.navigateByUrl('/settings');
+    this.router.navigateByUrl('/home/tabs/todo');
   }
 
   async saveSuccessfulToast() {

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="end">
-      <!-- <ion-menu-button></ion-menu-button> -->
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Completed</ion-title>
   </ion-toolbar>
@@ -20,9 +20,8 @@
 <ion-content padding>
   <ion-list lines="none" *ngIf="!grouped">
     <ion-item *ngFor="let todo of (todos | callback: filterTodo)" class="completed" (click)="routeToEdit(todo.id)">
-      <ion-icon slot="start" src="/assets/md-checkmark-circle.svg" (click)="toggleCompleted(todo, $event)"
-        color="tertiary"></ion-icon>
-      <ion-icon class="trash" slot="end" src="/assets/md-close.svg" (click)="deleteTodo(todo, $event)"></ion-icon>
+      <ion-icon slot="start" name="checkmark-circle" (click)="toggleCompleted(todo, $event)" color="tertiary"></ion-icon>
+      <ion-icon class="trash" slot="end" name="close" (click)="deleteTodo(todo, $event)"></ion-icon>
       <ion-label>{{ todo.title }}</ion-label>
     </ion-item>
   </ion-list>
@@ -31,11 +30,9 @@
       <ion-item class="group-header">
         <ion-label>{{ group.completedMonth}}</ion-label>
       </ion-item>
-      <ion-item *ngFor="let todo of (group.todos | callback: filterTodo)" (click)="routeToEdit(todo.id)"
-        class="group-item">
-        <ion-icon slot="start" src="/assets/md-checkbox.svg" (click)="toggleCompleted(todo, $event)"
-          color="tertiary"></ion-icon>
-          <ion-icon class="trash" slot="end" src="/assets/md-close.svg" (click)="deleteTodo(todo, $event)"></ion-icon>
+      <ion-item *ngFor="let todo of (group.todos | callback: filterTodo)" (click)="routeToEdit(todo.id)" class="group-item">
+        <ion-icon slot="start" name="checkbox" (click)="toggleCompleted(todo, $event)" color="tertiary"></ion-icon>
+        <ion-icon slot="end" name="close" class="trash" (click)="deleteTodo(todo, $event)"></ion-icon>
         <ion-label>
           <ion-text>{{ todo.title }}</ion-text>
         </ion-label>
@@ -45,7 +42,7 @@
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="presentCreateCompletedTodoAlert()" color="tertiary">
-      <ion-icon src="/assets/md-checkmark-circle-outline.svg"></ion-icon>
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>

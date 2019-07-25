@@ -120,8 +120,4 @@ export class CompletedPage implements OnInit {
 
     await alert.present();
   }
-
-  goToSettings() {
-    this.router.navigateByUrl('/settings');
-  }
 }

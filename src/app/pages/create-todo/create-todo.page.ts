@@ -44,7 +44,7 @@ export class CreateTodoPage implements OnInit {
     this.todoService.createTodo(this.todo);
     this.saveSuccessfulToast();
     this.closeModal();
-    // this.router.navigateByUrl('/home/todo');
+    // this.router.navigateByUrl('/tabs/todo');
   }
 
   async saveSuccessfulToast() {
@@ -59,7 +59,7 @@ export class CreateTodoPage implements OnInit {
 
   closeModal() {
     this.modalController.dismiss();
-    // this.router.navigateByUrl('/home/todo');
+    // this.router.navigateByUrl('/tabs/todo');
   }
 
   goToSettings() {
