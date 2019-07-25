@@ -9,20 +9,12 @@ import { Router, RouterEvent } from '@angular/router';
 export class MenuPage implements OnInit {
 
   pages = [
-    // {
-    //   title: 'First page with tabs',
-    //   url: '/menu/first'
-    // },
-    // {
-    //   title: 'Second page blank',
-    //   url: '/menu/second'
-    // },
     {
-      title: 'Todos',
+      title: 'Todo Listing',
       url: '/menu/home'
     },
     {
-      title: 'Categories',
+      title: 'Category Settings',
       url: '/menu/categories'
     }
   ];
