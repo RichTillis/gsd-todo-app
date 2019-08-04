@@ -14,11 +14,11 @@ const routes: Routes = [
     children: [
       {
         path: "todo",
-        loadChildren: "../todo/todo.module#TodoPageModule"
+        loadChildren: () => import('../todo/todo.module').then(m => m.TodoPageModule)
       },
       {
         path: "completed",
-        loadChildren: "../completed/completed.module#CompletedPageModule"
+        loadChildren: () => import('../completed/completed.module').then(m => m.CompletedPageModule)
       }
     ]
   },
@@ -29,13 +29,6 @@ const routes: Routes = [
   }
 ];
 
-// const routes: Routes = [
-//   {
-//     path: '',
-//     component: HomePage
-//   }
-// ];
-
 @NgModule({
   imports: [
     CommonModule,
@@ -45,4 +38,4 @@ const routes: Routes = [
   ],
   declarations: [HomePage]
 })
-export class HomePageModule {}
+export class HomePageModule { }
