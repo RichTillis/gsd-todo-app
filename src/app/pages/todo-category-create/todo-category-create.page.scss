@@ -2,6 +2,11 @@ ion-button {
     --background: white;
 }
 
+ion-item {
+    --ion-item-background: var(--ion-color-light);
+    padding-bottom: 1.5em;
+}
+
 .close-button {
     font-size: 32px;
     margin-right: .5em;
@@ -11,7 +16,7 @@ ion-button {
     font-size: 24px;
 }
 
-.red-1{
+.red-1 {
     color: '#cc0000';
 }
 
