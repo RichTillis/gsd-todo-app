@@ -1,0 +1,17 @@
+ion-item {
+    --border-radius: 75px;
+    --ion-item-background: var(--ion-color-light);
+    padding-bottom: 0.5em;
+    --min-height: 0;
+}
+
+ion-icon {
+    font-size: 32px;
+    margin: 0;
+}
+
+ion-label {
+    margin-left: 1em;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
