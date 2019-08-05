@@ -16,12 +16,12 @@ export class AppComponent {
     {
       title: 'Todo Listing',
       url: '/home',
-      icon: 'list'
+      icon: 'checkmark-circle'
     },
     {
       title: 'Category Settings',
       url: '/categories',
-      icon: 'list'
+      icon: 'list-box'
     },
     // {
     //   title: 'Theme Settings',
