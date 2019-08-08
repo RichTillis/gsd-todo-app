@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'edit/:id',
     loadChildren: () => import('./pages/edit-todo/edit-todo.module').then(m => m.EditTodoPageModule)
   },
+  { 
+    path: 'themes', 
+    loadChildren: () => import('./pages/themes/themes.module').then(m => m.ThemesPageModule),
+  }
 ];
 
 @NgModule({

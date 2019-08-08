@@ -23,11 +23,11 @@ export class AppComponent {
       url: '/categories',
       icon: 'list-box'
     },
-    // {
-    //   title: 'Theme Settings',
-    //   url: '/menu/themes',
-    //   icon: 'list'
-    // },
+    {
+      title: 'Theme Settings',
+      url: '/themes',
+      icon: 'color-palette'
+    },
   ];
 
   selectedPath = '';
